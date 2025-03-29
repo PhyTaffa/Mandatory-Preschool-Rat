@@ -129,12 +129,15 @@ public class PerkSpawner : MonoBehaviour
             Button three = buttons[0].gameObject.transform.GetChild(2).gameObject.GetComponent<Button>();
 
             one.onClick.AddListener(() => perks.GetPerkFunction(perkList[0]));
+            one.image.sprite = perks.GetPerkImage(perkList[0]);
             one.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[0]);
 
             two.onClick.AddListener(() => perks.GetPerkFunction(perkList[1]));
+            two.image.sprite = perks.GetPerkImage(perkList[1]);
             two.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[1]);
 
             three.onClick.AddListener(() => perks.GetPerkFunction(perkList[2]));
+            three.image.sprite = perks.GetPerkImage(perkList[2]);
             three.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[2]);
         }
         else if (perkList.Count == 2)
@@ -145,9 +148,11 @@ public class PerkSpawner : MonoBehaviour
             Button two = buttons[1].gameObject.transform.GetChild(1).gameObject.GetComponent<Button>();
 
             one.onClick.AddListener(() => perks.GetPerkFunction(perkList[0]));
+            one.image.sprite = perks.GetPerkImage(perkList[0]);
             one.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[0]);
 
             two.onClick.AddListener(() => perks.GetPerkFunction(perkList[1]));
+            two.image.sprite = perks.GetPerkImage(perkList[1]);
             two.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[1]);
         }
         else if (perkList.Count == 1)
@@ -157,6 +162,7 @@ public class PerkSpawner : MonoBehaviour
             Button one = buttons[2].gameObject.transform.GetChild(0).gameObject.GetComponent<Button>();
 
             one.onClick.AddListener(() => perks.GetPerkFunction(perkList[0]));
+            one.image.sprite = perks.GetPerkImage(perkList[0]);
             one.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[0]);
         }
     }
