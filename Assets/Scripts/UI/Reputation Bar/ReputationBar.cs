@@ -9,24 +9,32 @@ public class ReputationBar : MonoBehaviour
     public Slider slider;
     public int reputationLevel = 1;
     public int maxReputationLevel = 20;
+    public int currentReputationXP = 0;
+    public int reputationMaxXP = 100;
+
 
     public void SetReputation(int reputation)
     {
-        slider.value = reputation;
+        currentReputationXP = currentReputationXP + reputation;
+        slider.value = currentReputationXP;
     }
 
     public void SetMaxReputation(int maxReputation)
     {
-        slider.maxValue = maxReputation;
+        reputationMaxXP = maxReputation;
+        slider.maxValue = reputationMaxXP;
     }
 
-    public void NextLevel(int maxReputation)
+    public void NextLevel()
     {
-        if (slider.value >= slider.maxValue)
+        if (currentReputationXP >= reputationMaxXP)
         {
             reputationLevel++;
-            slider.value = 0;
-            slider.maxValue = maxReputation;
+
+            currentReputationXP = currentReputationXP % reputationMaxXP;
+            slider.value = currentReputationXP;
+
+            slider.maxValue = reputationMaxXP;
         }
     }
 
@@ -36,5 +44,11 @@ public class ReputationBar : MonoBehaviour
         {
             //Show ending screen
         }
+    }
+
+    void Update()
+    {
+        NextLevel();
+        VictoryCondition();
     }
 }
