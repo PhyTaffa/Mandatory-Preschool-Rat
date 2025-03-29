@@ -9,6 +9,7 @@ public class PatienceBar : MonoBehaviour
     public Slider slider;
     public float currentPatience = 100;
     public int maxPatience = 100;
+    public bool isDead = false;
 
     [SerializeField] private float timeBetweenDecrease = 1f;
     [SerializeField] private float amountBetweenDecrease = 2f;
@@ -16,6 +17,11 @@ public class PatienceBar : MonoBehaviour
     void Start()
     {
         StartCoroutine(DecreaseOvertime());    
+    }
+
+    void Update()
+    {
+        LostPatientCondition();
     }
 
     private void SubtractPatience(float patience)
@@ -29,11 +35,17 @@ public class PatienceBar : MonoBehaviour
         slider.maxValue = maxPatience;
     }
 
-    void LosingCondition()
+    void LostPatientCondition()
     {
-        if(currentPatience >= 0)
+        if(currentPatience <= 0)
         {
-            //call the losing screen
+            if (!isDead)
+            {
+                isDead = true;
+                StopAllCoroutines();
+            }
+            
+    
         }
     }
 
