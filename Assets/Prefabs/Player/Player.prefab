@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5851586128057979287}
   - component: {fileID: 8382369489407427838}
   - component: {fileID: 7632288336768516621}
+  - component: {fileID: 8524898357072007516}
+  - component: {fileID: 3184474632155292169}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -126,3 +128,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8524898357072007516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708051631258719600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98baca8f4611fb94b93eaf1278c04629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRep: 0
+  addRepValue: 10
+--- !u!114 &3184474632155292169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708051631258719600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2efd5a1ab18d5d4e97eec454fab6c45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRepLevel: 0
+  maxRepLevel: 20
+  nextUpgradeLevel: 0
+  perksUI: {fileID: 0}
+  perks: {fileID: 0}
+  prePerkListName: []
+  prePerkListId: 
+  perkList: 
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
