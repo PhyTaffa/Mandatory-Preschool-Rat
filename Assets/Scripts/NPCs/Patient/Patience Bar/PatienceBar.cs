@@ -29,9 +29,12 @@ public class PatienceBar : MonoBehaviour
         slider.maxValue = maxPatience;
     }
 
-    void reducePatienceOverTime()
+    void LosingCondition()
     {
-
+        if(currentPatience >= 0)
+        {
+            //call the losing screen
+        }
     }
 
     private IEnumerator DecreaseOvertime()

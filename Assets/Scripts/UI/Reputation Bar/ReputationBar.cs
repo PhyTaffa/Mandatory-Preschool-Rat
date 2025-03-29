@@ -2,30 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ReputationBar : MonoBehaviour
 {
 
     public Slider slider;
-    public int reputationLevel = 1;
-    public int maxReputationLevel = 20;
-    public int currentReputationXP = 0;
-    public int reputationMaxXP = 100;
+    [SerializeField] private int reputationLevel = 1;
+    [SerializeField] private int maxReputationLevel = 20;
+    [SerializeField] private float currentReputationXP = 0;
+    [SerializeField] private int reputationMaxXP = 100;
+    [SerializeField] private TextMeshProUGUI text;
 
 
-    public void SetReputation(int reputation)
+    void SetReputation(int reputation)
     {
         currentReputationXP = currentReputationXP + reputation;
         slider.value = currentReputationXP;
     }
 
-    public void SetMaxReputation(int maxReputation)
+    void SetMaxReputation(int maxReputation)
     {
         reputationMaxXP = maxReputation;
         slider.maxValue = reputationMaxXP;
     }
 
-    public void NextLevel()
+    void NextLevel()
     {
         if (currentReputationXP >= reputationMaxXP)
         {
@@ -38,11 +40,11 @@ public class ReputationBar : MonoBehaviour
         }
     }
 
-    public void VictoryCondition()
+    void VictoryCondition()
     {
         if (reputationLevel >= maxReputationLevel)
         {
-            //Show ending screen
+            //Show victory screen
         }
     }
 
@@ -50,5 +52,7 @@ public class ReputationBar : MonoBehaviour
     {
         NextLevel();
         VictoryCondition();
+
+        text.text = reputationLevel.ToString();
     }
 }
