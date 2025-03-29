@@ -116,16 +116,6 @@ public class PerkSpawner : MonoBehaviour
                     }
                 }
             }
-
-            //if (createPerkList.Count < 3)
-            //{
-            //    Debug.LogError("You did math wrong, no 3 perk combination available with these conditions");
-            //    for (int j = 0; j < createPerkList.Count; j++)
-            //    {
-            //        Debug.Log("Num " + j + " is " + createPerkList[j] + " or " + perks.GetPerkName(createPerkList[j]));
-            //    }
-            //    return;
-            //}
         }
 
         perkList = createPerkList;
@@ -294,7 +284,7 @@ public class PerkSpawner : MonoBehaviour
                 gambleList.Add(1);
             }
 
-            if (helperUpg < 7)
+            if (helperUpg < 7 && helperUpg < bedUpg)
             {
                 gambleList.Add(2);
             }

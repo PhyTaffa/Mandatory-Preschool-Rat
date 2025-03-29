@@ -77,11 +77,10 @@ public class Perks : MonoBehaviour
 
     public void UpgradeBeds()
     {
-        
         GameObject[] beds = GameObject.FindGameObjectsWithTag("Bed");
         if(beds.Length == 4)
         {
-            Instantiate(bedPrefab, beds[0].transform.position + new Vector3(0, -9, 0), Quaternion.identity, bedParent.transform);
+            Instantiate(bedPrefab, beds[0].transform.position + new Vector3(0, -8, 0), Quaternion.identity, bedParent.transform);
         }
         else
         {
@@ -91,7 +90,7 @@ public class Perks : MonoBehaviour
     }
     public void UpgradeHelpers()
     {
-        Instantiate(helperPrefab, Vector3.zero, Quaternion.identity, helperParent.transform);
+        Instantiate(helperPrefab, helperParent.transform.position, Quaternion.identity, helperParent.transform);
         currentHelperUpgrade++;
     }
 
