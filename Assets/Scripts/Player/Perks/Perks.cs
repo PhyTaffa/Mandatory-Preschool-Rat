@@ -14,10 +14,15 @@ public class Perks : MonoBehaviour
     [Header("Bed Perk")]
     [SerializeField] private int maxBedUpgrade = 7;
     [field: SerializeField] public int currentBedUpgrade { get; private set; }
+    [SerializeField] private GameObject bedPrefab;
+    [SerializeField] private GameObject bedParent;
+    
 
     [Header("Helper Perk")]
     [SerializeField] private int maxHelperUpgrade = 7;
     [field: SerializeField] public int currentHelperUpgrade { get; private set; }
+    [SerializeField] private GameObject helperPrefab;
+    [SerializeField] private GameObject helperParent;
 
     [Header("Medicine Inv Perk")]
     [SerializeField] private int maxInvUpgrade = 3;
@@ -47,6 +52,14 @@ public class Perks : MonoBehaviour
         {
             UpgradePatience();
         }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            UpgradeBeds();
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            UpgradeHelpers();
+        }
     }
 
     public void UpgradeMovement()
@@ -57,11 +70,22 @@ public class Perks : MonoBehaviour
 
     public void UpgradeBeds()
     {
-        //Diogo
+        
+        GameObject[] beds = GameObject.FindGameObjectsWithTag("Bed");
+        if(beds.Length == 4)
+        {
+            Instantiate(bedPrefab, beds[0].transform.position + new Vector3(0, -9, 0), Quaternion.identity, bedParent.transform);
+        }
+        else
+        {
+            Instantiate(bedPrefab, beds[beds.Length-1].transform.position + new Vector3(4, 0, 0), Quaternion.identity, bedParent.transform);   
+        }
+        currentBedUpgrade++;
     }
     public void UpgradeHelpers()
     {
-        //Diogo
+        Instantiate(helperPrefab, Vector3.zero, Quaternion.identity, helperParent.transform);
+        currentHelperUpgrade++;
     }
 
 
