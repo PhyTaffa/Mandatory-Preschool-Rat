@@ -7,18 +7,18 @@ public class PatienceBar : MonoBehaviour
 {
 
     public Slider slider;
-    public int currentPatience = 100;
+    public float currentPatience = 100;
     public int maxPatience = 100;
 
-    private float newPatienceTimer;
-    private float patienceTimerLimit = 50f;
+    [SerializeField] private float timeBetweenDecrease = 1f;
+    [SerializeField] private float amountBetweenDecrease = 2f;
 
-    void patienceInit()
+    void Start()
     {
-        newPatienceTimer = patienceTimerLimit;
+        StartCoroutine(DecreaseOvertime());    
     }
 
-    private void SubtractPatience(int patience)
+    private void SubtractPatience(float patience)
     {
         currentPatience = currentPatience - patience;
         slider.value = currentPatience;
@@ -29,8 +29,17 @@ public class PatienceBar : MonoBehaviour
         slider.maxValue = maxPatience;
     }
 
-    void Update()
+    void reducePatienceOverTime()
     {
-        
+
+    }
+
+    private IEnumerator DecreaseOvertime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeBetweenDecrease);
+            SubtractPatience(amountBetweenDecrease);
+        }
     }
 }
