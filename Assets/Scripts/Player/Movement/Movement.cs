@@ -5,19 +5,16 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float baseSpeed = 5f;
-    private float currentSpeed;
+    [SerializeField] private float currentSpeed;
     private Rigidbody2D rb;
     private Vector2 movement;
 
-    
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentSpeed = baseSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -32,14 +29,14 @@ public class Movement : MonoBehaviour
     }
 
     
-    public void SetSpeed(int speed)
+    public void SetSpeed(float speed)
     {
         currentSpeed = speed;
     }
 
     public float getSpeed()
     {
-        return currentSpeed;
+        return baseSpeed;
     }
     
 }

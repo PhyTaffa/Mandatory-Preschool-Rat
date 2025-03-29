@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class Perks : MonoBehaviour
 {
+    [Header("Player")]
+    [SerializeField] private GameObject player;
+
     [Header("Movement Perk")]
     [SerializeField] private int maxMovementUpgrade = 3;
     [field:SerializeField] public int currentMovementUpgrade { get; private set; }
     [SerializeField] private int movementUpgrade = 2;
-    [SerializeField] private float movement = 6;
 
     [Header("Bed Perk")]
     [SerializeField] private int maxBedUpgrade = 7;
     [field: SerializeField] public int currentBedUpgrade { get; private set; }
     [SerializeField] private GameObject bedPrefab;
     [SerializeField] private GameObject bedParent;
-    
 
     [Header("Helper Perk")]
     [SerializeField] private int maxHelperUpgrade = 7;
@@ -37,6 +38,11 @@ public class Perks : MonoBehaviour
 
     [Header("Perk Names")]
     [SerializeField] private string[] perkName;
+
+    private void Start()
+    {
+        
+    }
 
     void Update()
     {
@@ -65,7 +71,8 @@ public class Perks : MonoBehaviour
     public void UpgradeMovement()
     {
         currentMovementUpgrade++;
-        movement += (movementUpgrade * Mathf.Sqrt(currentMovementUpgrade));
+        float speed = player.GetComponent<Movement>().getSpeed() + movementUpgrade * Mathf.Sqrt(currentMovementUpgrade);
+        player.GetComponent<Movement>().SetSpeed(speed);
     }
 
     public void UpgradeBeds()
