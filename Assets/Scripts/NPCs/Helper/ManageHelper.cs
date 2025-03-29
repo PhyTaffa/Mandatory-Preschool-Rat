@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class ManageHelper : MonoBehaviour
 {
@@ -68,20 +69,24 @@ public class ManageHelper : MonoBehaviour
         GameObject newStart = targetTiles[startIndex];
         GameObject newFinish = targetTiles[finishIndex];
 
-        BFS(newStart, newFinish);
+        aStar(newStart, newFinish);
     }
 
-    private void BFS(GameObject startTile, GameObject finishTile)
+    private void aStar(GameObject startTile, GameObject finishTile)
     {
         Dictionary<GameObject, GameObject> cameFrom = new Dictionary<GameObject, GameObject>();
-        Queue<GameObject> queue = new Queue<GameObject>();
-        queue.Enqueue(startTile);
-        cameFrom[startTile] = null;
+        Dictionary<GameObject, float> costSoFar = new Dictionary<GameObject, float>();
+        
 
-        while (queue.Count > 0)
+        PriorityQueue<GameObject> priorityQueue = new PriorityQueue<GameObject>();
+        priorityQueue.Enqueue(startTile, 1f);
+        cameFrom[startTile] = null;
+        costSoFar[startTile] = 0f;
+
+        while (priorityQueue.Count > 0)
         {
-            GameObject current = queue.Dequeue();
-            current.GetComponent<SpriteRenderer>().color = Color.black;
+            GameObject current = priorityQueue.Dequeue();
+            //current.GetComponent<SpriteRenderer>().color = Color.black;
 
             if (GameObject.ReferenceEquals(current, finishTile))
             {
@@ -90,17 +95,37 @@ public class ManageHelper : MonoBehaviour
             }
 
             List<GameObject> neighbors = GetNeighbors(current);
+            
             foreach (GameObject neighbor in neighbors)
             {
-                if (!cameFrom.ContainsKey(neighbor))
+                float newCost = costSoFar[current] + GetCostPlusDistance(neighbor, finishTile);
+
+                if (!cameFrom.ContainsKey(neighbor) || newCost < costSoFar[neighbor])
                 {
-                    queue.Enqueue(neighbor);
+                    cameFrom[neighbor] = current;
+                    costSoFar[neighbor] = newCost;
+
+                    priorityQueue.EnqueueOrUpdate(neighbor, 1f);
                     cameFrom[neighbor] = current;
                 }
             }
         }
 
         Debug.Log("No BFS path found!");
+    }
+    private float GetCostPlusDistance(GameObject tile, GameObject finishTile)
+    {
+        float cost = 0;
+        float distance = 0;
+        
+        if(tile.tag.Contains("Tile"))
+        {
+            cost = 10;
+        }
+        
+        distance = Mathf.Sqrt(Mathf.Pow(finishTile.transform.position.x - tile.transform.position.x, 2) + Mathf.Pow(finishTile.transform.position.y - tile.transform.position.y, 2));
+        
+        return cost + distance;
     }
 
     List<GameObject> GetNeighbors(GameObject floorTile)
@@ -114,6 +139,11 @@ public class ManageHelper : MonoBehaviour
             new Vector3(-1, 0, 0), 
             new Vector3(0, 1, 0),  
             new Vector3(0, -1, 0),  
+            
+            // new Vector3(1, 1, 0),  
+            // new Vector3(-1, 1, 0), 
+            // new Vector3(-1, -1, 0),  
+            // new Vector3(1, -1, 0),  
         };
 
         foreach (Vector3 dir in directions)
@@ -149,6 +179,6 @@ public class ManageHelper : MonoBehaviour
     void StartNewPath()
     {
         currentCycleIndex = 0; // Start at first tile in the list
-        BFS(targetTiles[0], targetTiles[1]);
+        aStar(targetTiles[0], targetTiles[1]);
     }
 }

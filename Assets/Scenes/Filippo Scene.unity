@@ -251,10 +251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac68d6a824ca94d4e8366e6e99f3b1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTiles:
-  - {fileID: 1268352496}
-  - {fileID: 0}
-  - {fileID: 0}
+  targetTiles: []
+  helper: {fileID: 0}
 --- !u!50 &400555787
 Rigidbody2D:
   serializedVersion: 4
@@ -394,6 +392,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &638976614 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6868380424106534566, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+  m_PrefabInstance: {fileID: 557079825128348750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &754018974
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTiles: []
+  helper: {fileID: 0}
 --- !u!4 &754018976
 Transform:
   m_ObjectHideFlags: 0
@@ -612,22 +616,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTiles:
   - {fileID: 190984749}
-  - {fileID: 1056952100}
-  - {fileID: 1219016340}
-  - {fileID: 190984749}
---- !u!1 &1056952100 stripped
+  - {fileID: 638976614}
+  - {fileID: 1130659145}
+  helper: {fileID: 0}
+--- !u!1 &1130659145 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6424511088117856068, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
-  m_PrefabInstance: {fileID: 557079825128348750}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1219016340 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6011762397280123701, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
-  m_PrefabInstance: {fileID: 557079825128348750}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1268352496 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4296327903330060737, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4816857832797962390, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
   m_PrefabInstance: {fileID: 557079825128348750}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &557079825128348750
