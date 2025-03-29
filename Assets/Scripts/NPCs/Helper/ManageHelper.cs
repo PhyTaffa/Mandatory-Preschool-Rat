@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ManageHelper : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> targetTiles; // List of waypoints (A, B, C, ...)
-    private GameObject helper = null;
+    [SerializeField] private List<GameObject> targetTiles; // List of waypoints (1, 2, 3, ...)
+    [SerializeField] private GameObject helper;
 
     private Dictionary<Vector3, GameObject> tilesDictionary = new Dictionary<Vector3, GameObject>();
     private List<GameObject> path = new List<GameObject>();
 
-    private int currentTargetIndex = 0;
+    private int currentTargetIndex = 0;  // Tracks movement along the path
+    private int currentCycleIndex = 0;   // Tracks which tile in targetTiles is the start
     private float moveSpeed = 5f;
 
     void Start()
@@ -24,10 +25,10 @@ public class ManageHelper : MonoBehaviour
         }
 
         helper = this.gameObject;
-        
+
         if (targetTiles.Count >= 2)
         {
-            BFS(targetTiles[currentTargetIndex], targetTiles[(currentTargetIndex + 1) % targetTiles.Count]);
+            StartNewPath();
         }
     }
 
@@ -58,9 +59,11 @@ public class ManageHelper : MonoBehaviour
 
     void CycleToNextTarget()
     {
-        // Advance to the next pair in the cycle
-        int startIndex = (currentTargetIndex) % targetTiles.Count;
-        int finishIndex = (startIndex + 1) % targetTiles.Count;
+        // Move to the next start tile in the sequence (cycling through the list)
+        currentCycleIndex = (currentCycleIndex + 1) % targetTiles.Count;
+
+        int startIndex = currentCycleIndex;
+        int finishIndex = (currentCycleIndex + 1) % targetTiles.Count;
 
         GameObject newStart = targetTiles[startIndex];
         GameObject newFinish = targetTiles[finishIndex];
@@ -78,7 +81,7 @@ public class ManageHelper : MonoBehaviour
         while (queue.Count > 0)
         {
             GameObject current = queue.Dequeue();
-            //current.GetComponent<SpriteRenderer>().color = Color.black;
+            current.GetComponent<SpriteRenderer>().color = Color.black;
 
             if (GameObject.ReferenceEquals(current, finishTile))
             {
@@ -141,5 +144,11 @@ public class ManageHelper : MonoBehaviour
         {
             tile.GetComponent<SpriteRenderer>().color = Color.green;
         }
+    }
+
+    void StartNewPath()
+    {
+        currentCycleIndex = 0; // Start at first tile in the list
+        BFS(targetTiles[0], targetTiles[1]);
     }
 }
