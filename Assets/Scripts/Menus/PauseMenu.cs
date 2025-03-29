@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
+    private GameObject stateManager;
     // Start is called before the first frame update
     void Start()
     {
-        
+        stateManager = FindObjectOfType<GameStateManager>().gameObject;
     }
 
     // Update is called once per frame
@@ -18,19 +19,19 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pauseMenu.SetActive(true);
-            Time.timeScale = 0;
+            stateManager.GetComponent<GameStateManager>().paused = true;
         }
     }
 
     public void Resume()
     {
         pauseMenu.SetActive(false);
-        Time.timeScale = 1;
+        stateManager.GetComponent<GameStateManager>().paused = false;
     }
 
-    public void MainMenu()  
+    public void MainMenu()
     {
-        Time.timeScale = 1;
+        stateManager.GetComponent<GameStateManager>().paused = false;
         SceneManager.LoadScene("MainMenu");
     }
 }

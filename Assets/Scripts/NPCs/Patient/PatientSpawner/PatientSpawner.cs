@@ -27,20 +27,26 @@ public class PatientSpawner : MonoBehaviour
     private float newPatientTimer;
 
     private float patientTimerLimit = 35f;
+
+    private GameObject stateManager;
     // Start is called before the first frame update
     void Start()
     {
         patientPosition = entrance.transform.position;
         newPatientTimer = patientTimerLimit;
+        stateManager = FindObjectOfType<GameStateManager>().gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        AddMemberToLine();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!stateManager.GetComponent<GameStateManager>().paused)
         {
-            RemovePatientFromLine(patientList.First());
+            AddMemberToLine();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                RemovePatientFromLine(patientList.First());
+            }
         }
     }
 
