@@ -7,14 +7,30 @@ public class PatienceBar : MonoBehaviour
 {
 
     public Slider slider;
+    public int currentPatience = 100;
+    public int maxPatience = 100;
 
-    public void SetPatience(int patience)
+    private float newPatienceTimer;
+    private float patienceTimerLimit = 50f;
+
+    void patienceInit()
     {
-        slider.value = patience;
+        newPatienceTimer = patienceTimerLimit;
     }
 
-    public void SetMaxReputation(int maxPatience)
+    private void SubtractPatience(int patience)
+    {
+        currentPatience = currentPatience - patience;
+        slider.value = currentPatience;
+    }
+
+    private void SetMaxPatience()
     {
         slider.maxValue = maxPatience;
+    }
+
+    void Update()
+    {
+        
     }
 }
