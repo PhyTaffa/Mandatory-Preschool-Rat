@@ -12,6 +12,13 @@ public class PatientSpawner : MonoBehaviour
     private float amountcollumn = 0;
     private Vector3 patientPosition;
     private Vector3 CurrentpatientPosition;
+    
+    //Organizer
+    private float amountOrganize;
+    private int collumnNumberOrganize;
+    private Vector3 patientPositionOrganize;
+    private Vector3 CurrentpatientPositionOrganize;
+    [SerializeField] private List<GameObject> patientOrganizerList = new List<GameObject>();
 
     [SerializeField] private int repLevel;
     
@@ -72,11 +79,6 @@ public class PatientSpawner : MonoBehaviour
                 //     patientPosition = newPatient.transform.position;
                 //     CurrentpatientPosition = newPatient.transform.position;
                 // }
-                 else if (collumnNumber > 0 && amountcollumn > 0)
-                 {
-                     newPatient.transform.position = patientPosition + new Vector3(-1.25f, CheckAmountInLine() * (1.25f * (amountcollumn-1)), 0);
-                     CurrentpatientPosition = newPatient.transform.position;
-                }
                 else
                 {
                     //int x = patientList.Count / 7;
@@ -91,24 +93,38 @@ public class PatientSpawner : MonoBehaviour
     public void RemovePatientFromLine(GameObject patient)
     {
         patientList.Remove(patient);
-        Destroy(patient);
+        amountOrganize = 0;
+        collumnNumberOrganize = 0;
+        patientPositionOrganize = entrance.transform.position; 
+        CurrentpatientPositionOrganize = entrance.transform.position;
+        patientOrganizerList.Clear();
         OrganizeLine();
+        amountcollumn = amountOrganize;
+        collumnNumber = collumnNumberOrganize;
+        CurrentpatientPosition = CurrentpatientPositionOrganize;
+        patientPosition = patientPositionOrganize;
+        collumnNumber = collumnNumberOrganize;
     }
 
     private void OrganizeLine()
     {
-        int i = 1;
         foreach (GameObject patient in patientList)
         {
-            if (i == 1)
+            patientOrganizerList.Add(patient);
+            CheckForNewLine2();
+            if (amountOrganize == 0)
             {
-                patient.transform.position = patientPosition + new Vector3(-2f, 0f, 0);
+                patient.transform.position = patientPositionOrganize + new Vector3(-1.25f, 0f, 0);
+                patientPositionOrganize = patient.transform.position;
+                CurrentpatientPositionOrganize = patient.transform.position;
             }
             else
             {
-                patient.transform.position = patientPosition + new Vector3(-2.75f, 1.25f * (i - 2), 0);
+                //int x = patientList.Count / 7;
+                patient.transform.position = patientPositionOrganize + new Vector3(-1.25f, CheckAmountInLine2() * (1.25f * (amountOrganize - 1f)), 0);
+                CurrentpatientPositionOrganize = patient.transform.position;
             }
-            i++;
+            amountOrganize += 1; 
         }
     }
 
@@ -121,6 +137,23 @@ public class PatientSpawner : MonoBehaviour
         }
 
         CheckForNewLine();
+        if (i % 2 == 0)
+        {
+            //even
+            return 1;
+        }
+        //odd
+        return -1;
+    }
+    private int CheckAmountInLine2()
+    {
+        int i = patientOrganizerList.Count/5;
+        if(collumnNumberOrganize >= 0)
+        {
+            i = (patientOrganizerList.Count+1)/6;  
+        }
+
+        CheckForNewLine2();
         if (i % 2 == 0)
         {
             //even
@@ -142,6 +175,20 @@ public class PatientSpawner : MonoBehaviour
             collumnNumber = i;
             patientPosition = CurrentpatientPosition;
             amountcollumn = 0f;
+        }
+    }
+    private void CheckForNewLine2()
+    {
+        int i = patientOrganizerList.Count/5;
+        if(collumnNumberOrganize >= 0)
+        {
+            i = (patientOrganizerList.Count+1)/6;  
+        }
+        if (i != collumnNumberOrganize)
+        {
+            collumnNumberOrganize = i;
+            patientPositionOrganize = CurrentpatientPositionOrganize;
+            amountOrganize = 0f;
         }
     }
 }
