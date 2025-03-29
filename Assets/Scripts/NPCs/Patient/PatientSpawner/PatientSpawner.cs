@@ -20,9 +20,16 @@ public class PatientSpawner : MonoBehaviour
     private Vector3 CurrentpatientPositionOrganize;
     [SerializeField] private List<GameObject> patientOrganizerList = new List<GameObject>();
 
+    //DeathBar 
+    [SerializeField] private GameObject patienceBarPrefab;
+    private List<GameObject> patienceBarList = new List<GameObject>();
+    private List<GameObject> globalPatienceBarList = new List<GameObject>();
+    
+    
     [SerializeField] private int repLevel;
 
     [SerializeField] private List<GameObject> patientList = new List<GameObject>();
+    private List<GameObject> globalPatientList = new List<GameObject>();
 
     private float newPatientTimer;
 
@@ -74,6 +81,7 @@ public class PatientSpawner : MonoBehaviour
             {
                 GameObject newPatient = Instantiate(patientPrefab, patientParent.transform);
                 patientList.Add(newPatient);
+                globalPatientList.Add(newPatient);
                 CheckForNewLine();
                 if (amountcollumn == 0)
                 {

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5379806947304318430}
   - component: {fileID: 5945601059558120635}
   - component: {fileID: 1643692423083374814}
-  - component: {fileID: 2237805810220244953}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -76,23 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2237805810220244953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2261219062627452415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7603d2b46950f284a90b8a5c160e88e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  currentPatience: 100
-  maxPatience: 100
-  timeBetweenDecrease: 1
-  amountBetweenDecrease: 2
 --- !u!1 &3451858755714203410
 GameObject:
   m_ObjectHideFlags: 0
