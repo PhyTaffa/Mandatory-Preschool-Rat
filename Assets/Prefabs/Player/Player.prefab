@@ -14,11 +14,10 @@ GameObject:
   - component: {fileID: 7632288336768516621}
   - component: {fileID: 8524898357072007516}
   - component: {fileID: 3184474632155292169}
-  - component: {fileID: 4444483211094574183}
-  - component: {fileID: 5251347160082188170}
+  - component: {fileID: 3850975238115062524}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +129,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8524898357072007516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +168,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!70 &4444483211094574183
-CapsuleCollider2D:
+--- !u!61 &3850975238115062524
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}

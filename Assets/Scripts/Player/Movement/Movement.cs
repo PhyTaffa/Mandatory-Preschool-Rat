@@ -21,6 +21,11 @@ public class Movement : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");
         movement.Normalize();
     }
+
+    public Vector2 ReturnMovement()
+    {
+        return movement;
+    }
     
     void FixedUpdate()
     {

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +11,8 @@ public class PatientSpawner : MonoBehaviour
     private float amountcollumn = 0;
     private Vector3 patientPosition;
     private Vector3 CurrentpatientPosition;
-    
+    private GameObject player;
+
     //Organizer
     private float amountOrganize;
     private int collumnNumberOrganize;
@@ -21,7 +21,7 @@ public class PatientSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> patientOrganizerList = new List<GameObject>();
 
     [SerializeField] private int repLevel;
-    
+
     [SerializeField] private List<GameObject> patientList = new List<GameObject>();
 
     private float newPatientTimer;
@@ -29,12 +29,14 @@ public class PatientSpawner : MonoBehaviour
     private float patientTimerLimit = 35f;
 
     private GameObject stateManager;
+
     // Start is called before the first frame update
     void Start()
     {
         patientPosition = entrance.transform.position;
         newPatientTimer = patientTimerLimit;
         stateManager = FindObjectOfType<GameStateManager>().gameObject;
+        player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class PatientSpawner : MonoBehaviour
             AddMemberToLine();
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                RemovePatientFromLine(patientList.First());
+                RemovePatientFromLine();
             }
         }
     }
@@ -67,7 +69,7 @@ public class PatientSpawner : MonoBehaviour
             {
                 spawnNum = 2;
             }
-            
+
             for (int i = 0; i < spawnNum; i++)
             {
                 GameObject newPatient = Instantiate(patientPrefab, patientParent.transform);
@@ -79,12 +81,6 @@ public class PatientSpawner : MonoBehaviour
                     patientPosition = newPatient.transform.position;
                     CurrentpatientPosition = newPatient.transform.position;
                 }
-                // else if (collumnNumber > 0 && amountcollumn == 1)
-                // {
-                //     newPatient.transform.position = patientPosition + new Vector3(-1.25f, 0f, 0);
-                //     patientPosition = newPatient.transform.position;
-                //     CurrentpatientPosition = newPatient.transform.position;
-                // }
                 else
                 {
                     //int x = patientList.Count / 7;
@@ -96,12 +92,13 @@ public class PatientSpawner : MonoBehaviour
         }
     }
 
-    public void RemovePatientFromLine(GameObject patient)
+    public void RemovePatientFromLine()
     {
+        GameObject patient = patientList.First();
         patientList.Remove(patient);
         amountOrganize = 0;
         collumnNumberOrganize = 0;
-        patientPositionOrganize = entrance.transform.position; 
+        patientPositionOrganize = entrance.transform.position;
         CurrentpatientPositionOrganize = entrance.transform.position;
         patientOrganizerList.Clear();
         OrganizeLine();
@@ -110,6 +107,9 @@ public class PatientSpawner : MonoBehaviour
         CurrentpatientPosition = CurrentpatientPositionOrganize;
         patientPosition = patientPositionOrganize;
         collumnNumber = collumnNumberOrganize;
+
+        PatientMovemnt patientMovemnt = patient.GetComponent<PatientMovemnt>();
+        patientMovemnt.patientState = 2;
     }
 
     private void OrganizeLine()
@@ -130,16 +130,16 @@ public class PatientSpawner : MonoBehaviour
                 patient.transform.position = patientPositionOrganize + new Vector3(-1.25f, CheckAmountInLine2() * (1.25f * (amountOrganize - 1f)), 0);
                 CurrentpatientPositionOrganize = patient.transform.position;
             }
-            amountOrganize += 1; 
+            amountOrganize += 1;
         }
     }
 
     private int CheckAmountInLine()
     {
-        int i = patientList.Count/5;
-        if(collumnNumber >= 0)
+        int i = patientList.Count / 5;
+        if (collumnNumber >= 0)
         {
-             i = (patientList.Count+1)/6;  
+            i = (patientList.Count + 1) / 6;
         }
 
         CheckForNewLine();
@@ -153,10 +153,10 @@ public class PatientSpawner : MonoBehaviour
     }
     private int CheckAmountInLine2()
     {
-        int i = patientOrganizerList.Count/5;
-        if(collumnNumberOrganize >= 0)
+        int i = patientOrganizerList.Count / 5;
+        if (collumnNumberOrganize >= 0)
         {
-            i = (patientOrganizerList.Count+1)/6;  
+            i = (patientOrganizerList.Count + 1) / 6;
         }
 
         CheckForNewLine2();
@@ -171,10 +171,10 @@ public class PatientSpawner : MonoBehaviour
 
     private void CheckForNewLine()
     {
-        int i = patientList.Count/5;
-        if(collumnNumber >= 0)
+        int i = patientList.Count / 5;
+        if (collumnNumber >= 0)
         {
-             i = (patientList.Count+1)/6;  
+            i = (patientList.Count + 1) / 6;
         }
         if (i != collumnNumber)
         {
@@ -185,10 +185,10 @@ public class PatientSpawner : MonoBehaviour
     }
     private void CheckForNewLine2()
     {
-        int i = patientOrganizerList.Count/5;
-        if(collumnNumberOrganize >= 0)
+        int i = patientOrganizerList.Count / 5;
+        if (collumnNumberOrganize >= 0)
         {
-            i = (patientOrganizerList.Count+1)/6;  
+            i = (patientOrganizerList.Count + 1) / 6;
         }
         if (i != collumnNumberOrganize)
         {
