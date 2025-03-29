@@ -9,7 +9,7 @@ public class Perks : MonoBehaviour
     [SerializeField] private int maxMovementUpgrade = 3;
     [field:SerializeField] public int currentMovementUpgrade { get; private set; }
     [SerializeField] private int movementUpgrade = 2;
-    [SerializeField] private int movement = 6;
+    [SerializeField] private float movement = 6;
 
     [Header("Bed Perk")]
     [SerializeField] private int maxBedUpgrade = 7;
@@ -51,9 +51,19 @@ public class Perks : MonoBehaviour
 
     public void UpgradeMovement()
     {
-        movement += movementUpgrade;
         currentMovementUpgrade++;
+        movement += (movementUpgrade * Mathf.Sqrt(currentMovementUpgrade));
     }
+
+    public void UpgradeBeds()
+    {
+        //Diogo
+    }
+    public void UpgradeHelpers()
+    {
+        //Diogo
+    }
+
 
     public void UpgradeInv()
     {
@@ -77,5 +87,29 @@ public class Perks : MonoBehaviour
             }
         }
         return "No perk name";
+    }
+
+    public void GetPerkFunction(int perkNum)
+    {
+        if (perkNum == 0)
+        {
+            UpgradeMovement();
+        }
+        else if (perkNum == 1)
+        {
+            UpgradeBeds();
+        }
+        else if (perkNum == 2)
+        {
+            UpgradeHelpers();
+        }
+        else if (perkNum == 3)
+        {
+            UpgradeInv();
+        }
+        else if (perkNum == 4)
+        {
+            UpgradePatience();
+        }
     }
 }

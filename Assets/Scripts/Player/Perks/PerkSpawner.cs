@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Cache;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PerkSpawner : MonoBehaviour
 {
@@ -14,6 +18,8 @@ public class PerkSpawner : MonoBehaviour
     [SerializeField] private List<int> prePerkListId;
     [SerializeField] private List<int> perkList;
 
+    [SerializeField] private GameObject[] buttons;
+
     private void Start()
     {
         nextUpgradeLevel = currentRepLevel + 1;
@@ -25,6 +31,11 @@ public class PerkSpawner : MonoBehaviour
         {
             nextUpgradeLevel++;
             SpawnPerks();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            currentRepLevel++;
         }
     }
 
@@ -43,55 +54,121 @@ public class PerkSpawner : MonoBehaviour
         prePerkListName = CheckPerksName();
         prePerkListId = CheckPerksId();
 
-        List<int> createPerkList = new List<int>(); 
+        List<int> createPerkList = new List<int>();
 
-        for (int i = 0; i < 3; i++)
+        if(prePerkListId.Count <= 3)
         {
-            int randomAdd = Random.Range(0, prePerkListId.Count + 1);
+            createPerkList = prePerkListId;
+        }
+        else if (prePerkListId.Count > 3)
+        {
+            int attempts = 0;
 
-            bool isInside = false;
-
-            for (int j = 0; j < prePerkListId.Count; j++)
+            for (int i = 0; i < 3; i++)
             {
-                if (randomAdd == prePerkListId[j])
+                attempts++;
+
+                if (attempts >= 100)
                 {
-                    isInside = true;
                     break;
                 }
-            }
 
-            if (!isInside) 
-            {
-                if (createPerkList.Count < 3)
-                {
-                    i--;
-                }
-            }
-            else
-            {
-                bool isInside2 = false;
+                int randomAdd = Random.Range(0, prePerkListId.Count + 1);
 
-                for (int j = 0; j < createPerkList.Count; j++)
+                bool isInside = false;
+
+                for (int j = 0; j < prePerkListId.Count; j++)
                 {
-                    if (randomAdd == createPerkList[j])
+                    if (randomAdd == prePerkListId[j])
                     {
-                        isInside2 = true;
+                        isInside = true;
                         break;
                     }
                 }
 
-                if (!isInside2)
+                if (!isInside)
                 {
-                    createPerkList.Add(randomAdd);
+                    if (createPerkList.Count < 3)
+                    {
+                        i--;
+                    }
                 }
                 else
                 {
-                    i--;
+                    bool isInside2 = false;
+
+                    for (int j = 0; j < createPerkList.Count; j++)
+                    {
+                        if (randomAdd == createPerkList[j])
+                        {
+                            isInside2 = true;
+                            break;
+                        }
+                    }
+
+                    if (!isInside2)
+                    {
+                        createPerkList.Add(randomAdd);
+                    }
+                    else
+                    {
+                        i--;
+                    }
                 }
             }
+
+            //if (createPerkList.Count < 3)
+            //{
+            //    Debug.LogError("You did math wrong, no 3 perk combination available with these conditions");
+            //    for (int j = 0; j < createPerkList.Count; j++)
+            //    {
+            //        Debug.Log("Num " + j + " is " + createPerkList[j] + " or " + perks.GetPerkName(createPerkList[j]));
+            //    }
+            //    return;
+            //}
         }
 
         perkList = createPerkList;
+
+        if (perkList.Count == 3)
+        {
+            buttons[0].gameObject.SetActive(true);
+
+            Button one = buttons[0].gameObject.transform.GetChild(0).gameObject.GetComponent<Button>();
+            Button two = buttons[0].gameObject.transform.GetChild(1).gameObject.GetComponent<Button>();
+            Button three = buttons[0].gameObject.transform.GetChild(2).gameObject.GetComponent<Button>();
+
+            one.onClick.AddListener(() => perks.GetPerkFunction(perkList[0]));
+            one.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[0]);
+
+            two.onClick.AddListener(() => perks.GetPerkFunction(perkList[1]));
+            two.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[1]);
+
+            three.onClick.AddListener(() => perks.GetPerkFunction(perkList[2]));
+            three.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[2]);
+        }
+        else if (perkList.Count == 2)
+        {
+            buttons[1].gameObject.SetActive(true);
+            
+            Button one = buttons[1].gameObject.transform.GetChild(0).gameObject.GetComponent<Button>();
+            Button two = buttons[1].gameObject.transform.GetChild(1).gameObject.GetComponent<Button>();
+
+            one.onClick.AddListener(() => perks.GetPerkFunction(perkList[0]));
+            one.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[0]);
+
+            two.onClick.AddListener(() => perks.GetPerkFunction(perkList[1]));
+            two.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[1]);
+        }
+        else if (perkList.Count == 1)
+        {
+            buttons[2].gameObject.SetActive(true);
+            
+            Button one = buttons[2].gameObject.transform.GetChild(0).gameObject.GetComponent<Button>();
+
+            one.onClick.AddListener(() => perks.GetPerkFunction(perkList[0]));
+            one.gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = perks.GetPerkName(perkList[0]);
+        }
     }
 
     private List<string> CheckPerksName()
@@ -123,7 +200,7 @@ public class PerkSpawner : MonoBehaviour
                     gambleList.Add(perks.GetPerkName(0));
                 } 
 
-                if (movUpg >= 3)
+                if (movUpg >= 3 && ppUpg < 4)
                 {
                     gambleList.Add(perks.GetPerkName(4));
                 }
@@ -135,7 +212,7 @@ public class PerkSpawner : MonoBehaviour
                     gambleList.Add(perks.GetPerkName(4));
                 }
 
-                if (ppUpg >= 3)
+                if (ppUpg >= 3 && movUpg < 4)
                 {
                     gambleList.Add(perks.GetPerkName(0));
                 }
@@ -149,7 +226,7 @@ public class PerkSpawner : MonoBehaviour
                 gambleList.Add(perks.GetPerkName(1));
             }
 
-            if(helperUpg < 7)
+            if(helperUpg < 7 && helperUpg < bedUpg)
             {
                 gambleList.Add(perks.GetPerkName(2));
             }
@@ -191,7 +268,7 @@ public class PerkSpawner : MonoBehaviour
                     gambleList.Add(0);
                 }
 
-                if (movUpg >= 3)
+                if (movUpg >= 3 && ppUpg < 4)
                 {
                     gambleList.Add(4);
                 }
@@ -203,7 +280,7 @@ public class PerkSpawner : MonoBehaviour
                     gambleList.Add(4);
                 }
 
-                if (ppUpg >= 3)
+                if (ppUpg >= 3 && movUpg < 4)
                 {
                     gambleList.Add(0);
                 }
@@ -228,5 +305,19 @@ public class PerkSpawner : MonoBehaviour
         }
 
         return gambleList;
+    }
+
+    public void TakeOffListenners()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].gameObject.SetActive(false);
+
+            for (int j = 0; j < buttons[i].gameObject.transform.childCount; j++)
+            {
+                buttons[i].gameObject.transform.GetChild(j).gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+            }
+        }
+        perksUI.gameObject.SetActive(false);
     }
 }
