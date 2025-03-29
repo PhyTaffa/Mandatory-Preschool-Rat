@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Perks : MonoBehaviour
 {
@@ -36,13 +37,9 @@ public class Perks : MonoBehaviour
     [SerializeField] private int patienceUpgrade = 25;
     [SerializeField] private float patienceLevel = 100;
 
-    [Header("Perk Names")]
+    [Header("Perk")]
     [SerializeField] private string[] perkName;
-
-    private void Start()
-    {
-        
-    }
+    [SerializeField] private Sprite[] perkImage;
 
     void Update()
     {
@@ -117,6 +114,17 @@ public class Perks : MonoBehaviour
             }
         }
         return "No perk name";
+    }    
+    public Sprite GetPerkImage(int perkNum)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (perkNum == i)
+            {
+                return perkImage[i];
+            }
+        }
+        return null;
     }
 
     public void GetPerkFunction(int perkNum)

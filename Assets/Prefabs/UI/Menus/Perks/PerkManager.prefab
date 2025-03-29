@@ -69,3 +69,9 @@ MonoBehaviour:
   - Extra Helper
   - Extra Inventory Slot
   - Patience Boost
+  perkImage:
+  - {fileID: 21300000, guid: 46b0f6fde4d53aa4c90f394592b98f0d, type: 3}
+  - {fileID: 21300000, guid: fa7edaf10904745449f8c34beb8da0bc, type: 3}
+  - {fileID: 21300000, guid: 5ea8c9e80256c7b47956beeff297cdf7, type: 3}
+  - {fileID: 21300000, guid: 78210d7e5db1a274db0c1e9bea31d4b6, type: 3}
+  - {fileID: 21300000, guid: 3af7d839f6641924492eca8a4ab89c06, type: 3}
