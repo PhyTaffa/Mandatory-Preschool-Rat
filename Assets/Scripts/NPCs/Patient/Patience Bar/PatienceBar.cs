@@ -35,6 +35,8 @@ public class PatienceBar : MonoBehaviour
         slider.maxValue = maxPatience;
     }
 
+    
+
     void LostPatientCondition()
     {
         if(currentPatience <= 0)

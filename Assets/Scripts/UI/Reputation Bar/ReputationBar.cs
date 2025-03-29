@@ -13,6 +13,7 @@ public class ReputationBar : MonoBehaviour
     [SerializeField] private float currentReputationXP = 0;
     [SerializeField] private int reputationMaxXP = 100;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private GameObject victory;
 
 
     void SetReputation(int reputation)
@@ -45,6 +46,7 @@ public class ReputationBar : MonoBehaviour
         if (reputationLevel >= maxReputationLevel)
         {
             //Show victory screen
+            victory.SetActive(true);
         }
     }
 
