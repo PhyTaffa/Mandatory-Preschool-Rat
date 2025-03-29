@@ -20,6 +20,8 @@ public class PerkSpawner : MonoBehaviour
 
     [SerializeField] private GameObject[] buttons;
 
+    [SerializeField] private GameStateManager gameStateManager;
+
     private void Start()
     {
         nextUpgradeLevel = currentRepLevel + 1;
@@ -30,6 +32,7 @@ public class PerkSpawner : MonoBehaviour
         if (CanUpgrade())
         {
             nextUpgradeLevel++;
+            gameStateManager.paused = true;
             SpawnPerks();
         }
 
@@ -305,6 +308,7 @@ public class PerkSpawner : MonoBehaviour
 
     public void TakeOffListenners()
     {
+        gameStateManager.paused = false;
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].gameObject.SetActive(false);

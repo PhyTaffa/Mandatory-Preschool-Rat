@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private GameStateManager gameStateManager;
     public float baseSpeed = 5f;
     [SerializeField] private float currentSpeed;
     private Rigidbody2D rb;
@@ -17,9 +18,12 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        movement.Normalize();
+        if (!gameStateManager.paused)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+            movement.Normalize();
+        }
     }
 
     public Vector2 ReturnMovement()
@@ -29,8 +33,11 @@ public class Movement : MonoBehaviour
     
     void FixedUpdate()
     {
-        rb.velocity = Vector2.zero; 
-        rb.MovePosition(rb.position + movement * currentSpeed * Time.fixedDeltaTime);
+        if (!gameStateManager.paused)
+        {
+            rb.velocity = Vector2.zero;
+            rb.MovePosition(rb.position + movement * currentSpeed * Time.fixedDeltaTime);
+        }
     }
 
     
