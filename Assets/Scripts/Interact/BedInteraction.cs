@@ -11,6 +11,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
     private float elapsedTime = 0f;
     [HideInInspector] public bool isPatientOnBed = false;
     [HideInInspector] public bool isHealing = false;
+    [HideInInspector] public bool isNathan = false;
     //private PatientMovemnt patientMovemnt;
 
     private void Update()
@@ -71,7 +72,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
         {
             Medication meds = FindObjectOfType<Medication>();
 
-            if (isPatientOnBed && meds.currentMediHeld > 0)
+            if ((isPatientOnBed && meds.currentMediHeld > 0) || isNathan)
             {
                 elapsedTime = 0;
                 Debug.Log("Curing Patient");
