@@ -14,13 +14,13 @@ public class PatientMovemnt : MonoBehaviour
 
     private GameObject player;
     private GameObject bed;
+    private GameObject theGoodPlace;
     [SerializeField] private NavMeshAgent agent;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         agent.enabled = true;
-        agent.SetDestination(player.transform.position);
 
     }
 
@@ -40,6 +40,15 @@ public class PatientMovemnt : MonoBehaviour
         {
             agent.SetDestination(bed.transform.position);
         }
+        else if (patientState == 4)
+        {
+            agent.SetDestination(theGoodPlace.transform.position);
+
+            if (agent.hasPath && !agent.pathPending && agent.remainingDistance != Mathf.Infinity && agent.remainingDistance < 1f)
+            {
+                Destroy(gameObject);
+            }
+        }
         else
         {
             agent.isStopped = true;
@@ -51,4 +60,12 @@ public class PatientMovemnt : MonoBehaviour
         patientState = 3;
         this.bed = bed;
     }
+
+    public void SendPatientToHome(GameObject heaven)
+    {
+        theGoodPlace = heaven;
+        patientState = 4;
+
+    }
 }
+

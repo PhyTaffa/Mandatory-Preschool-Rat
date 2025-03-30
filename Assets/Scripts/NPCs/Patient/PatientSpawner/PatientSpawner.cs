@@ -235,7 +235,7 @@ public class PatientSpawner : MonoBehaviour
         {
             RemovePatientFromLine();
         }
-        patient.GetComponent<PatientMovemnt>().patientState = 4;
+        patient.GetComponent<PatientMovemnt>().patientState = -1;
         Destroy(bar);
         Destroy(patient);
         deathCounter++;

@@ -36,7 +36,10 @@ public class Medication : MonoBehaviour
 
     public void SubtractCurrentMedication(int amountOfMedication)
     {
-        currentMediHeld = currentMediHeld - amountOfMedication;
+        if (currentMediHeld - amountOfMedication >= 0)
+        {
+            currentMediHeld = currentMediHeld - amountOfMedication;
+        }
     }
 
 }
