@@ -19,6 +19,7 @@ public class PatienceBar : MonoBehaviour
     {
         StartCoroutine(DecreaseOvertime());
         murderMe = FindObjectOfType<PatientSpawner>().gameObject;
+        currentPatience = maxPatience;
     }
 
     void Update()

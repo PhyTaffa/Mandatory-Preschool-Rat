@@ -51,6 +51,7 @@ public class PatientSpawner : MonoBehaviour
         stateManager = FindObjectOfType<GameStateManager>().gameObject;
         player = GameObject.FindWithTag("Player");
         murderPatient.AddListener(MurderPatient);
+        patienceBarPrefab.GetComponent<PatienceBar>().SetMaxPatience(100);
     }
 
     // Update is called once per frame
