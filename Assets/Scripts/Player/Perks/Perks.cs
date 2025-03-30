@@ -88,15 +88,19 @@ public class Perks : MonoBehaviour
     public void UpgradeBeds()
     {
         GameObject[] beds = GameObject.FindGameObjectsWithTag("Bed");
-        if(beds.Length == 4)
+        GameObject currHBed;
+        if (beds.Length == 4)
         {
-            Instantiate(bedPrefab, beds[0].transform.position + new Vector3(0, -8, 0), Quaternion.identity, bedParent.transform);
+            currHBed =  Instantiate(bedPrefab, beds[0].transform.position + new Vector3(0, -8, 0), Quaternion.identity, bedParent.transform);
         }
         else
         {
-            Instantiate(bedPrefab, beds[beds.Length-1].transform.position + new Vector3(4, 0, 0), Quaternion.identity, bedParent.transform);
+            currHBed = Instantiate(bedPrefab, beds[beds.Length-1].transform.position + new Vector3(4, 0, 0), Quaternion.identity, bedParent.transform);
         }
+
+
         currentBedUpgrade++;
+        tileBedArray[currentBedUpgrade].GetComponent<BedBinder>().bedRefGO = currHBed;
     }
     public void UpgradeHelpers()
     {

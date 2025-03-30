@@ -10,7 +10,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
 
     private float elapsedTime = 0f;
     private bool isPatientOnBed = false;
-    private bool isHealing = false;
+    [HideInInspector] public bool isHealing = false;
     //private PatientMovemnt patientMovemnt;
 
     private void Update()
@@ -22,6 +22,8 @@ public class BedInteraction : MonoBehaviour, IInteractable
             elapsedTime += Time.deltaTime;
             int seconds = Mathf.FloorToInt(elapsedTime % 60);
 
+            sliderGO.SetActive(true);
+
             // Update the slider value to reflect the elapsed time
             slider.value = elapsedTime;
 
@@ -29,6 +31,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
             {
                 Debug.Log("Cured");
                 isHealing = false;
+                sliderGO.SetActive(false);
                 sliderGO.SetActive(false);
 
                 isPatientOnBed = false;
@@ -73,7 +76,6 @@ public class BedInteraction : MonoBehaviour, IInteractable
                 elapsedTime = 0;
                 Debug.Log("Curing Patient");
                 FindObjectOfType<PatientSpawner>().GetBarWithPatient(currentPatient.gameObject).GetComponent<PatienceBar>().healing = true;
-                sliderGO.SetActive(true);
                 meds.SubtractCurrentMedication(1);
                 isHealing = true;
             }
