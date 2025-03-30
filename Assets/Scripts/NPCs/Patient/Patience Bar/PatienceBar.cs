@@ -10,13 +10,15 @@ public class PatienceBar : MonoBehaviour
     public float currentPatience = 100;
     public int maxPatience = 100;
     public bool isDead = false;
+    private GameObject murderMe;
 
     [SerializeField] private float timeBetweenDecrease = 1f;
     [SerializeField] private float amountBetweenDecrease = 2f;
 
     void Start()
     {
-        StartCoroutine(DecreaseOvertime());    
+        StartCoroutine(DecreaseOvertime());
+        murderMe = FindObjectOfType<PatientSpawner>().gameObject;
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class PatienceBar : MonoBehaviour
             if (!isDead)
             {
                 isDead = true;
+                murderMe.GetComponent<PatientSpawner>().murderPatient.Invoke(gameObject);
                 StopAllCoroutines();
             }
             

@@ -19,8 +19,7 @@ public class PatientMovemnt : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         agent.enabled = true;
-        agent.SetDestination(player.transform.position);
-
+        //agent.SetDestination(player.transform.position);
     }
 
     // Update is called once per frame
@@ -35,7 +34,7 @@ public class PatientMovemnt : MonoBehaviour
             agent.isStopped = false;
             agent.SetDestination(target);
         }
-        else
+        else if (patientState == 3)
         {
             agent.isStopped = true;
         }

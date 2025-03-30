@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PatientSpawner : MonoBehaviour
 {
@@ -22,9 +23,9 @@ public class PatientSpawner : MonoBehaviour
 
     //DeathBar 
     [SerializeField] private GameObject patienceBarPrefab;
-    private List<GameObject> patienceBarList = new List<GameObject>();
+    [SerializeField] private GameObject patienceBarParent;
     private List<GameObject> globalPatienceBarList = new List<GameObject>();
-    
+    private int deathCounter = 0;
     
     [SerializeField] private int repLevel;
 
@@ -37,13 +38,19 @@ public class PatientSpawner : MonoBehaviour
 
     private GameObject stateManager;
 
+    public UnityEvent<GameObject> murderPatient = new UnityEvent<GameObject>();
+
+    [SerializeField] private GameObject losePrefab;
+    [SerializeField] private GameObject losePrefabHold;
+
     // Start is called before the first frame update
     void Start()
     {
         patientPosition = entrance.transform.position;
-        newPatientTimer = patientTimerLimit;
+        newPatientTimer = patientTimerLimit - Time.deltaTime*5;
         stateManager = FindObjectOfType<GameStateManager>().gameObject;
         player = GameObject.FindWithTag("Player");
+        murderPatient.AddListener(MurderPatient);
     }
 
     // Update is called once per frame
@@ -82,6 +89,9 @@ public class PatientSpawner : MonoBehaviour
                 GameObject newPatient = Instantiate(patientPrefab, patientParent.transform);
                 patientList.Add(newPatient);
                 globalPatientList.Add(newPatient);
+                GameObject newBar = Instantiate(patienceBarPrefab, patienceBarParent.transform);
+                newBar.GetComponent<PatientTracker>().patient = newPatient;
+                globalPatienceBarList.Add(newBar);
                 CheckForNewLine();
                 if (amountcollumn == 0)
                 {
@@ -203,6 +213,26 @@ public class PatientSpawner : MonoBehaviour
             collumnNumberOrganize = i;
             patientPositionOrganize = CurrentpatientPositionOrganize;
             amountOrganize = 0f;
+        }
+    }
+
+    private void MurderPatient(GameObject bar)
+    {
+        int index = globalPatienceBarList.IndexOf(bar);
+        GameObject patient = globalPatientList[index];
+        globalPatienceBarList.Remove(bar);
+        globalPatientList.Remove(patient);
+        if(patientList.Contains(patient))
+        {
+            RemovePatientFromLine();
+        }
+        patient.GetComponent<PatientMovemnt>().patientState = 4;
+        Destroy(bar);
+        Destroy(patient);
+        deathCounter++;
+        if (deathCounter >= 3)
+        {
+            Instantiate(losePrefab, losePrefabHold.transform);
         }
     }
 }
