@@ -6,6 +6,7 @@ using UnityEngine;
 public class ManageHelper : MonoBehaviour
 {
     [SerializeField] private List<GameObject> targetTiles; // List of A & B tiles
+    
     private GameObject helper;
     private Dictionary<Vector3, GameObject> tilesDictionary = new Dictionary<Vector3, GameObject>();
     private List<GameObject> path = new List<GameObject>();
@@ -54,6 +55,8 @@ public class ManageHelper : MonoBehaviour
         aStar(newFinish, newStart);
         yield return MoveAlongPath();
 
+        //start medicating patience -> acll functoin
+        
         isMoving = false; // Allows another press after full cycle
     }
 
@@ -144,5 +147,39 @@ public class ManageHelper : MonoBehaviour
         }
 
         path.Reverse();
+    }
+
+    // New Method to assign a task where the start is the player's position, and finish is from targetTiles
+    public void AssignNewTaskFromPlayer(GameObject newFinishTile)
+    {
+        // Set the player's position as the new start point
+        newStart = GetClosestTileToHelper();
+
+        // Assign the new finish point from the provided argument
+        newFinish = newFinishTile;
+
+        // Start A* with the new start and finish
+        aStar(newStart, newFinish);
+        StartCoroutine(MoveAlongPath());
+    }
+
+    // Method to get the closest tile to the player's current position
+    private GameObject GetClosestTileToHelper()
+    {
+        GameObject closestTile = null;
+        float minDistance = Mathf.Infinity;
+
+        // Iterate through each target tile and find the closest one to the helper's current position
+        foreach (GameObject tile in targetTiles)
+        {
+            float distance = Vector3.Distance(helper.transform.position, tile.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestTile = tile;
+            }
+        }
+
+        return closestTile;
     }
 }
