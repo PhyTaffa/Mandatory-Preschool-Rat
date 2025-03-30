@@ -28,7 +28,10 @@ public class Medication : MonoBehaviour
 
     public void AddCurrentMedication(int amountOfMedication)
     {
-        currentMediHeld = currentMediHeld + amountOfMedication;
+        if (currentMediHeld + amountOfMedication <= maxMediHeld)
+        {
+            currentMediHeld = currentMediHeld + amountOfMedication;
+        }
     }
 
     public void SubtractCurrentMedication(int amountOfMedication)
