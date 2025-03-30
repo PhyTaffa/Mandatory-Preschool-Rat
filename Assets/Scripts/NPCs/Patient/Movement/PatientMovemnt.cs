@@ -51,7 +51,7 @@ public class PatientMovemnt : MonoBehaviour
             agent.isStopped = false;
 
             agent.SetDestination(theGoodPlace.transform.position);
-
+               AnimationBoolSetter(new Vector2(transform.position.x, transform.position.y) - theGoodPlace.transform.position);
             if (agent.hasPath && !agent.pathPending && agent.remainingDistance != Mathf.Infinity && agent.remainingDistance < 1f)
             {
                 patientState = 5;
