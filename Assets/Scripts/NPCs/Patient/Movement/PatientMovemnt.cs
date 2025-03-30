@@ -19,12 +19,14 @@ public class PatientMovemnt : MonoBehaviour
     private GameObject theGoodPlace;
     [SerializeField] private NavMeshAgent agent;
     private GameObject cureMe;
+    private Animator animator;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         agent.enabled = true;
         cureMe = FindObjectOfType<PatientSpawner>().gameObject;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,9 +34,10 @@ public class PatientMovemnt : MonoBehaviour
     {
         if (patientState == 2)
         {
+            //animator.SetBool("walkup", )
             Vector3 offSet = new Vector2(-1.2f, -0.3f);
             Vector2 target = player.transform.position + offSet;
-
+            AnimationBoolSetter(new Vector2(transform.position.x, transform.position.y) - target);
             agent.speed = 8f;
             agent.isStopped = false;
             agent.SetDestination(target);
@@ -71,6 +74,54 @@ public class PatientMovemnt : MonoBehaviour
     {
         theGoodPlace = heaven;
         patientState = 4;
+    }
+
+    private void AnimationBoolSetter(Vector2 dir)
+    {
+        float x = Mathf.Round(dir.normalized.x);
+        float y = Mathf.Round(dir.normalized.y);
+
+        if(x == 0 && y == 0)
+        {
+            animator.SetBool("Idle", true);
+            animator.SetBool("MovingUp", false);
+            animator.SetBool("MovingDown", false);
+            animator.SetBool("MovingLeft", false);
+            animator.SetBool("MovingRight", false);
+        }
+        if(x == -1 && y == 0)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetBool("MovingUp", false);
+            animator.SetBool("MovingDown", false);
+            animator.SetBool("MovingLeft", false);
+            animator.SetBool("MovingRight", true);
+        }
+        if(x == 1 && y == 0)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetBool("MovingUp", false);
+            animator.SetBool("MovingDown", false);
+            animator.SetBool("MovingLeft", true);
+            animator.SetBool("MovingRight", false);
+        }
+        if(x == 0 && y == -1)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetBool("MovingUp", true);
+            animator.SetBool("MovingDown", false);
+            animator.SetBool("MovingLeft", false);
+            animator.SetBool("MovingRight", false);
+        }
+        if(x == 0 && y == 1)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetBool("MovingUp", false);
+            animator.SetBool("MovingDown", true);
+            animator.SetBool("MovingLeft", false);
+            animator.SetBool("MovingRight", false);
+        }
+        
     }
 }
 
