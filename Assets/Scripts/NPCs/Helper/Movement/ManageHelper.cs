@@ -20,6 +20,10 @@ public class ManageHelper : MonoBehaviour
     private BedBinder bedBinder;
     private BedInteraction bedInteraction;
 
+    //sprites and giggles
+    private Sprite nathanSprite = null;
+    private GameObject nathanGO = null;
+
     void Start()
     {
         GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
@@ -42,6 +46,12 @@ public class ManageHelper : MonoBehaviour
 
         bedBinder = targetTiles[0].GetComponent<BedBinder>();
         bedInteraction = bedBinder.bedRefGO.GetComponent<BedInteraction>();
+
+
+
+        //nathanSprite = Resources.Load<Sprite>("dontOpen.jpg");
+        nathanGO = GameObject.FindGameObjectWithTag("NATHAN");
+        nathanSprite = nathanGO.GetComponent<SpriteManager>().spriteNNN;
     }
 
     void Update()
@@ -55,6 +65,14 @@ public class ManageHelper : MonoBehaviour
         //    StopAllCoroutines();
         //    StartCoroutine(CycleBA());
         //}
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            // sprite and scale
+            Debug.Log(nathanSprite);
+            this.transform.localScale = new Vector3(0.14f, 0.14f, 0.14f);
+            GetComponent<SpriteRenderer>().sprite = nathanSprite;
+        }
     }
 
     IEnumerator CycleAB()

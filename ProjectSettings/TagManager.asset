@@ -9,6 +9,7 @@ TagManager:
   - Tile Bed
   - Tile Medication
   - GoodPlace
+  - NATHAN
   layers:
   - Default
   - TransparentFX

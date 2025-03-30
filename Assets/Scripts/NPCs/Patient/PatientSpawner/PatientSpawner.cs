@@ -67,10 +67,6 @@ public class PatientSpawner : MonoBehaviour
         if (!stateManager.GetComponent<GameStateManager>().paused)
         {
             AddMemberToLine();
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                RemovePatientFromLine();
-            }
         }
     }
 

@@ -2944,6 +2944,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 219055280}
     - target: {fileID: 5851586128057979287, guid: 5551feb8b4a795c47b16184f788c301f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ffbf219244f9a7c42a9c56db81c36cbc, type: 3}
+    - target: {fileID: 5851586128057979287, guid: 5551feb8b4a795c47b16184f788c301f, type: 3}
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
@@ -3195,6 +3199,51 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.51, y: -10.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1099383885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1099383887}
+  - component: {fileID: 1099383886}
+  m_Layer: 0
+  m_Name: Nathan Exister
+  m_TagString: NATHAN
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1099383886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099383885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d2972ac0346264786d07e7f2bf238d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteNNN: {fileID: 21300000, guid: 27452a52dce3dcf48ac0196f5be1b089, type: 3}
+--- !u!4 &1099383887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099383885}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.84, y: -0.23999977, z: -0.3333318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13589,3 +13638,4 @@ SceneRoots:
   - {fileID: 77370109}
   - {fileID: 213771080}
   - {fileID: 1018124850}
+  - {fileID: 1099383887}
