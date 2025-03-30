@@ -8,9 +8,9 @@ public class ReputationBar : MonoBehaviour
 {
 
     public Slider slider;
-    [SerializeField] private int reputationLevel = 1;
+    [field:SerializeField] public int reputationLevel { get; private set; }
     [SerializeField] private int maxReputationLevel = 20;
-    [field:SerializeField] public float currentReputationXP { get; set; }
+    [SerializeField] private float currentReputationXP = 0;
     [SerializeField] private int reputationMaxXP = 100;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject victory;
