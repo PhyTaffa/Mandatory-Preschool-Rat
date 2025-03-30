@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PatientInteraction : MonoBehaviour, IInteractable
 {
-    private bool playerHasPatient = false;
+    public bool playerHasPatient = false;
     public void Interact()
     {
         Debug.Log($"Interacted with the patient Line");
