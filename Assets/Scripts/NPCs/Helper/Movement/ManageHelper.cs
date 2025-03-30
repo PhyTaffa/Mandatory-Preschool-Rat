@@ -27,14 +27,16 @@ public class ManageHelper : MonoBehaviour
             tilesDictionary[tile.transform.position] = tile;
         }
 
+
         helper = this.gameObject;
         squareLength = targetTiles[0].GetComponent<SpriteRenderer>().bounds.size.x; // Assume uniform tile size
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
+        if (Input.GetKeyDown(KeyCode.C) && !isMoving)
         {
+
             StartCoroutine(CycleAB());
         }
     }
@@ -87,6 +89,7 @@ public class ManageHelper : MonoBehaviour
         while (priorityQueue.Count > 0)
         {
             GameObject current = priorityQueue.Dequeue();
+            current.GetComponent<SpriteRenderer>().color = Color.black;
 
             if (current == finishTile)
             {
@@ -147,6 +150,12 @@ public class ManageHelper : MonoBehaviour
         }
 
         path.Reverse();
+
+        for (int i = 0; i < path.Count; i++)
+        {
+            path[i].GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        
     }
 
     // New Method to assign a task where the start is the player's position, and finish is from targetTiles
