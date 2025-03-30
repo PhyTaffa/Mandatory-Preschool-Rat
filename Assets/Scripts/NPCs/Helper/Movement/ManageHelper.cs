@@ -8,7 +8,7 @@ using Random = System.Random;
 public class ManageHelper : MonoBehaviour
 {
     [SerializeField] private List<GameObject> targetTiles; // List of waypoints (1, 2, 3, ...)
-    [SerializeField] private GameObject helper;
+    private GameObject helper;
 
     private Dictionary<Vector3, GameObject> tilesDictionary = new Dictionary<Vector3, GameObject>();
     private List<GameObject> path = new List<GameObject>();
@@ -28,7 +28,8 @@ public class ManageHelper : MonoBehaviour
     [SerializeField] private GameObject bedGO = null;
     
     [SerializeField] private GameObject entranceGO = null;
-    
+
+    private float squareLenght = 0f;
     
     public enum HelperStates
     {
@@ -41,22 +42,19 @@ public class ManageHelper : MonoBehaviour
     void Start()
     {
         GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
-
+        
         // Save all tiles in dictionary
         foreach (GameObject tile in tiles)
         {
-            
             tilesDictionary[tile.transform.position] = tile;
         }
-
+        
         helper = this.gameObject;
 
         //initialize the stete
         helperState = HelperStates.Wondering;
         
-        //Hardcodes the first tile to be the one underneath the player's feet
-        // //targetTiles[0] = tilesDictionary[this.transform.position];
-        
+        squareLenght = entranceGO.GetComponent<SpriteRenderer>().bounds.size.x;
         
         helpInventory = this.gameObject.GetComponent<HelperInventory>();
 
@@ -121,6 +119,7 @@ public class ManageHelper : MonoBehaviour
         }
         else
         {
+            //Debug.Log($"no path found");
             CheckForPatientOrFetchMedicine();
         }
     }
@@ -183,28 +182,36 @@ public class ManageHelper : MonoBehaviour
 
     void MoveToBed()
     {
-        helpInventory.AddMedicine(-1);
+        //helpInventory.AddMedicine(-1);
         aStar(GetCurrentTile(), bedGO);  // Move helper to the bed
-        bedGO.GetComponent<GenericBed>().hasPatient = false;
+        StartCoroutine(HealPatientCoroutine());
+        //bedGO.GetComponent<GenericBed>().hasPatient = false;
     }
 
     IEnumerator HealPatientCoroutine()
     {
+        
         Debug.Log("Starting healing process...");
         float healTime = 5f; // Time in seconds to heal the patient
         yield return new WaitForSeconds(healTime);
 
         Debug.Log("Patient healed!");
         bedGO.GetComponent<GenericBed>().hasPatient = false; // Mark patient as healed
-        GoFetchMedicine(); // After healing, fetch medicine
+        helpInventory.AddMedicine(-1);
+
+        GoFetchPatiente();
+        //GoFetchMedicine(); // After healing, fetch medicine
     }
+
+    private void GoFetchPatiente()
+    {
+        aStar(GetCurrentTile(), entranceGO);
+    }
+
     void GoFetchMedicine()
     {
-        if (medicationLocation.Count > 0)
-        {
-            helpInventory.AddMedicine(1);
-            aStar(GetCurrentTile(), medicationLocation[0]);
-        }
+        helpInventory.AddMedicine(1);
+        aStar(GetCurrentTile(), medicationLocation[0]);
     }
 
 
@@ -327,10 +334,10 @@ public class ManageHelper : MonoBehaviour
 
         Vector3[] directions = new Vector3[]
         {
-            new Vector3(1, 0, 0),  
-            new Vector3(-1, 0, 0), 
-            new Vector3(0, 1, 0),  
-            new Vector3(0, -1, 0),  
+            new Vector3(squareLenght, 0, 0),  
+            new Vector3(-squareLenght, 0, 0), 
+            new Vector3(0, squareLenght, 0),  
+            new Vector3(0, -squareLenght, 0),  
             
             // new Vector3(1, 1, 0),  
             // new Vector3(-1, 1, 0), 
@@ -362,9 +369,9 @@ public class ManageHelper : MonoBehaviour
         path.Reverse();
         currentTargetIndex = 0; // Reset movement index
 
-        foreach (GameObject tile in path)
+        for (int i = 1; i < path.Count - 1; i++) // Excludes the last tile
         {
-            tile.GetComponent<SpriteRenderer>().color = Color.green;
+            path[i].GetComponent<SpriteRenderer>().color = Color.green;
         }
     }
 
