@@ -9,7 +9,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
     [SerializeField] private PatientMovemnt currentPatient;
 
     private float elapsedTime = 0f;
-    private bool isPatientOnBed = false;
+    [HideInInspector] public bool isPatientOnBed = false;
     [HideInInspector] public bool isHealing = false;
     //private PatientMovemnt patientMovemnt;
 
