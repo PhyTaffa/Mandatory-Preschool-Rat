@@ -28,6 +28,7 @@ public class PatientSpawner : MonoBehaviour
     private int deathCounter = 0;
     
     [SerializeField] private int repLevel;
+    private GameObject repBar;
 
     [SerializeField] private List<GameObject> patientList = new List<GameObject>();
     private List<GameObject> globalPatientList = new List<GameObject>();
@@ -52,6 +53,7 @@ public class PatientSpawner : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         murderPatient.AddListener(MurderPatient);
         patienceBarPrefab.GetComponent<PatienceBar>().SetMaxPatience(100);
+        repBar = FindObjectOfType<ReputationBar>().gameObject;
     }
 
     // Update is called once per frame
@@ -75,6 +77,7 @@ public class PatientSpawner : MonoBehaviour
     private void AddMemberToLine()
     {
         newPatientTimer += Time.deltaTime;
+        repLevel = repBar.GetComponent<ReputationBar>().reputationLevel;
         patientTimerLimit = 35 - repLevel;
         if (newPatientTimer >= patientTimerLimit)
         {

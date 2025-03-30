@@ -33,7 +33,6 @@ public class ReputationBar : MonoBehaviour
         if (currentReputationXP >= reputationMaxXP)
         {
             reputationLevel++;
-
             currentReputationXP = currentReputationXP % reputationMaxXP;
             slider.value = currentReputationXP;
 
