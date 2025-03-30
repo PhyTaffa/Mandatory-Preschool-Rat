@@ -15,8 +15,6 @@ public class BedInteraction : MonoBehaviour, IInteractable
         Medication meds = FindObjectOfType<Medication>();
         PatientMovemnt patientMovemnt = FindObjectOfType< PatientMovemnt>();
 
-        Debug.Log($"{patientInteraction.playerHasPatient}  {meds.currentMediHeld}");
-
         if (isPatientOnBed && meds.currentMediHeld > 0)
         {
             Debug.Log("Curring Patient");
@@ -28,8 +26,7 @@ public class BedInteraction : MonoBehaviour, IInteractable
 
             isPatientOnBed = true;
 
-            //Debug.Log(gameObject.transform.position);
-
+            patientInteraction.playerHasPatient = false;
             patientMovemnt.MoveToBed(gameObject);
 
         }

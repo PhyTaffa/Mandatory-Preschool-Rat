@@ -27,8 +27,6 @@ public class PatientMovemnt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(patientState);
-
         if (patientState == 2)
         {
             Vector3 offSet = new Vector2(-1.2f, -0.3f);
@@ -52,6 +50,5 @@ public class PatientMovemnt : MonoBehaviour
     {
         patientState = 3;
         this.bed = bed;
-
     }
 }
