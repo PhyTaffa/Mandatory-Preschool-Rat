@@ -6,16 +6,19 @@ public class BedInteraction : MonoBehaviour, IInteractable
     [SerializeField] private GameObject sliderGO;
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject ETGoHome;
+    [SerializeField] private PatientMovemnt currentPatient;
 
     private float elapsedTime = 0f;
     private bool isPatientOnBed = false;
-    private bool a = false;
+    private bool isHealing = false;
     //private PatientMovemnt patientMovemnt;
 
     private void Update()
     {
-        if (a)
+        if (isHealing)
         {
+            Movement movement = FindObjectOfType<Movement>();
+            movement.isCuring = true;
             elapsedTime += Time.deltaTime;
             int seconds = Mathf.FloorToInt(elapsedTime % 60);
 
@@ -25,11 +28,17 @@ public class BedInteraction : MonoBehaviour, IInteractable
             if (seconds == 3)
             {
                 Debug.Log("Cured");
-                a = false;
+                isHealing = false;
                 sliderGO.SetActive(false);
-                PatientMovemnt patientMovemnt = patientMovemnt = FindObjectOfType<PatientMovemnt>();
-                patientMovemnt = FindObjectOfType<PatientMovemnt>();
-                patientMovemnt.SendPatientToHome(ETGoHome);
+
+                isPatientOnBed = false;
+
+                //PatientMovemnt patientMovemnt = patientMovemnt = FindObjectOfType<PatientMovemnt>();
+                //patientMovemnt = FindObjectOfType<PatientMovemnt>();
+                currentPatient.SendPatientToHome(ETGoHome);
+
+                currentPatient = null;
+                movement.isCuring = false;
             }
         }
     }
@@ -37,30 +46,54 @@ public class BedInteraction : MonoBehaviour, IInteractable
     public void Interact()
     {
         //Put funciton call here to put the patient in bed
-        Debug.Log("Interacted with the a Bed");
-
-        PatientInteraction patientInteraction = FindObjectOfType<PatientInteraction>();
-        Medication meds = FindObjectOfType<Medication>();
-        PatientMovemnt patientMovemnt = patientMovemnt = FindObjectOfType<PatientMovemnt>();
-
-        if (isPatientOnBed && meds.currentMediHeld > 0)
+        if (currentPatient == null)
         {
-            Debug.Log("Curring Patient");
-
-            sliderGO.SetActive(true);
-            meds.SubtractCurrentMedication(1);
-            a = true;
-
+            isPatientOnBed = false;
         }
 
-        if (patientInteraction.playerHasPatient)
+        if (!isPatientOnBed)
         {
-            Debug.Log("Patient is on bed");
-
-            isPatientOnBed = true;
-
-            patientInteraction.playerHasPatient = false;
-            patientMovemnt.MoveToBed(gameObject);
+            foreach (PatientMovemnt patient in FindObjectsOfType<PatientMovemnt>())
+            {
+                if (patient.patientState == 2)
+                {
+                    patient.MoveToBed(gameObject);
+                    currentPatient = patient;
+                    isPatientOnBed = true;
+                    FindObjectOfType<PatientInteraction>().playerHasPatient = false;
+                }
+            }
         }
+        else
+        {
+            Medication meds = FindObjectOfType<Medication>();
+
+            if (isPatientOnBed && meds.currentMediHeld > 0)
+            {
+                elapsedTime = 0;
+                Debug.Log("Curing Patient");
+                FindObjectOfType<PatientSpawner>().GetBarWithPatient(currentPatient.gameObject).GetComponent<PatienceBar>().healing = true;
+                sliderGO.SetActive(true);
+                meds.SubtractCurrentMedication(1);
+                isHealing = true;
+            }
+        }
+
+        //Debug.Log("Interacted with the a Bed");
+
+        //PatientInteraction patientInteraction = FindObjectOfType<PatientInteraction>();
+        //PatientMovemnt patientMovemnt = patientMovemnt = FindObjectOfType<PatientMovemnt>();
+
+        //Debug.Log(patientInteraction.playerHasPatient);
+
+        //if (patientInteraction.playerHasPatient)
+        //{
+        //    Debug.Log("Patient is on bed");
+
+        //    isPatientOnBed = true;
+
+        //    patientInteraction.playerHasPatient = false;
+        //    patientMovemnt.MoveToBed(gameObject);
+        //}
     }
 }

@@ -21,14 +21,18 @@ public class PerkSpawner : MonoBehaviour
     [SerializeField] private GameObject[] buttons;
 
     [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] private ReputationBar repBar;
 
     private void Start()
     {
+        currentRepLevel = repBar.reputationLevel;
         nextUpgradeLevel = currentRepLevel + 1;
     }
 
     void Update()
     {
+        currentRepLevel = repBar.reputationLevel;
+
         if (CanUpgrade())
         {
             nextUpgradeLevel++;
@@ -38,7 +42,7 @@ public class PerkSpawner : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            currentRepLevel++;
+            repBar.reputationLevel++;
         }
     }
 

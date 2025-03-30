@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] public bool isCuring;
     public float baseSpeed = 5f;
     [SerializeField] private float currentSpeed;
     private Rigidbody2D rb;
@@ -18,7 +19,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (!gameStateManager.paused)
+        if (!gameStateManager.paused && !isCuring)
         {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");

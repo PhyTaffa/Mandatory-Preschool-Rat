@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PatienceBar : MonoBehaviour
 {
-
     public Slider slider;
     public float currentPatience = 100;
     public float maxPatience = 100;
     public bool isDead = false;
+    public bool healing = false;
+    public GameStateManager paused;
     private GameObject murderMe;
 
     [SerializeField] private float timeBetweenDecrease = 1f;
@@ -17,6 +19,7 @@ public class PatienceBar : MonoBehaviour
 
     void Start()
     {
+        paused = FindObjectOfType<GameStateManager>();
         StartCoroutine(DecreaseOvertime());
         murderMe = FindObjectOfType<PatientSpawner>().gameObject;
         currentPatience = maxPatience;
@@ -24,7 +27,10 @@ public class PatienceBar : MonoBehaviour
 
     void Update()
     {
-        LostPatientCondition();
+        if(!isDead)
+        {
+            LostPatientCondition();
+        }
     }
 
     private void SubtractPatience(float patience)
@@ -39,7 +45,10 @@ public class PatienceBar : MonoBehaviour
         slider.maxValue = maxPatience;
     }
 
-    
+    public float GetPatience()
+    {
+        return currentPatience;
+    }
 
     void LostPatientCondition()
     {
@@ -51,17 +60,22 @@ public class PatienceBar : MonoBehaviour
                 murderMe.GetComponent<PatientSpawner>().murderPatient.Invoke(gameObject);
                 StopAllCoroutines();
             }
-            
-    
         }
     }
 
     private IEnumerator DecreaseOvertime()
     {
-        while (true)
+        while (!healing)
         {
-            yield return new WaitForSeconds(timeBetweenDecrease);
-            SubtractPatience(amountBetweenDecrease);
+            if (!paused.paused)
+            {
+                yield return new WaitForSeconds(timeBetweenDecrease);
+                SubtractPatience(amountBetweenDecrease);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.05f);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class PatientSpawner : MonoBehaviour
 {
+    [SerializeField] private ReputationReward rep;
     [SerializeField] private GameObject entrance;
     [SerializeField] private GameObject patientPrefab;
     [SerializeField] private GameObject patientParent;
@@ -35,11 +36,13 @@ public class PatientSpawner : MonoBehaviour
 
     private float newPatientTimer;
 
-    private float patientTimerLimit = 35f;
+    [SerializeField] private float patientTimerLimit = 15f;
+    private float initialTimer;
 
     private GameObject stateManager;
 
     public UnityEvent<GameObject> murderPatient = new UnityEvent<GameObject>();
+    public UnityEvent<GameObject> curePatient = new UnityEvent<GameObject>();
 
     [SerializeField] private GameObject losePrefab;
     [SerializeField] private GameObject losePrefabHold;
@@ -47,11 +50,13 @@ public class PatientSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initialTimer = patientTimerLimit;
         patientPosition = entrance.transform.position;
         newPatientTimer = patientTimerLimit - Time.deltaTime*5;
         stateManager = FindObjectOfType<GameStateManager>().gameObject;
         player = GameObject.FindWithTag("Player");
         murderPatient.AddListener(MurderPatient);
+        curePatient.AddListener(PatientCured);
         patienceBarPrefab.GetComponent<PatienceBar>().SetMaxPatience(100);
         repBar = FindObjectOfType<ReputationBar>().gameObject;
     }
@@ -73,12 +78,16 @@ public class PatientSpawner : MonoBehaviour
     {
         patienceBarPrefab.GetComponent<PatienceBar>().SetMaxPatience(num);
     }
+    public float GetMaxPatienceBar()
+    {
+        return patienceBarPrefab.GetComponent<PatienceBar>().maxPatience;
+    }
 
     private void AddMemberToLine()
     {
         newPatientTimer += Time.deltaTime;
         repLevel = repBar.GetComponent<ReputationBar>().reputationLevel;
-        patientTimerLimit = 35 - repLevel;
+        patientTimerLimit = initialTimer - repLevel/2;
         if (newPatientTimer >= patientTimerLimit)
         {
             newPatientTimer = 0;
@@ -118,6 +127,8 @@ public class PatientSpawner : MonoBehaviour
             }
         }
     }
+
+
 
     public void RemovePatientFromLine()
     {
@@ -223,6 +234,25 @@ public class PatientSpawner : MonoBehaviour
             patientPositionOrganize = CurrentpatientPositionOrganize;
             amountOrganize = 0f;
         }
+    }
+
+    public PatienceBar GetBarWithPatient(GameObject patient)
+    {
+        int index = globalPatientList.IndexOf(patient);
+        GameObject bar = globalPatienceBarList[index];
+        return bar.GetComponent<PatienceBar>();
+    }
+
+    private void PatientCured(GameObject patient)
+    {
+        int index = globalPatientList.IndexOf(patient);
+        GameObject bar = globalPatienceBarList[index];
+        globalPatientList.Remove(patient);
+        globalPatienceBarList.Remove(bar);
+        rep.AddRep(bar.GetComponent<PatienceBar>().GetPatience());
+
+        Destroy(bar);
+        Destroy(patient);
     }
 
     private void MurderPatient(GameObject bar)

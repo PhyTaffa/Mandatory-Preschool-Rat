@@ -6,26 +6,23 @@ using TMPro;
 
 public class ReputationBar : MonoBehaviour
 {
-
     public Slider slider;
-    [field:SerializeField] public int reputationLevel { get; private set; }
+    [field:SerializeField] public int reputationLevel { get; set; }
     [SerializeField] private int maxReputationLevel = 20;
     [SerializeField] private float currentReputationXP = 0;
     [SerializeField] private int reputationMaxXP = 100;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject victory;
 
+    private void Start()
+    {
+        slider.maxValue = reputationMaxXP;
+    }
 
     public void SetReputation(float reputation)
     {
         currentReputationXP = currentReputationXP + reputation;
         slider.value = currentReputationXP;
-    }
-
-    public void SetMaxReputation(int maxReputation)
-    {
-        reputationMaxXP = maxReputation;
-        slider.maxValue = reputationMaxXP;
     }
 
     void NextLevel()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5379806947304318430}
   - component: {fileID: 5945601059558120635}
   - component: {fileID: 1643692423083374814}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,6 +182,7 @@ MonoBehaviour:
   currentPatience: 100
   maxPatience: 100
   isDead: 0
+  cured: 0
   timeBetweenDecrease: 0.05
   amountBetweenDecrease: 0.1
 --- !u!114 &2797186784182403975
@@ -208,7 +209,7 @@ GameObject:
   - component: {fileID: 7617337332858075497}
   - component: {fileID: 7279076132976950551}
   - component: {fileID: 7479586870618923456}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9056604, g: 0.17515129, b: 0.17515129, a: 1}
+  m_Color: {r: 0.1764706, g: 0.90588236, b: 0.8928047, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

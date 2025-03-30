@@ -7,21 +7,24 @@ using UnityEngine.AI;
 public class PatientMovemnt : MonoBehaviour
 {
     // Has the stats for the patient
+    // -1 -Is dead
     // 1 -In Line
     // 2 -Following player
     // 3 -In bed
+    // 4 -Is cured
     public int patientState = 1;
 
     private GameObject player;
     private GameObject bed;
     private GameObject theGoodPlace;
     [SerializeField] private NavMeshAgent agent;
+    private GameObject cureMe;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         agent.enabled = true;
-
+        cureMe = FindObjectOfType<PatientSpawner>().gameObject;
     }
 
     // Update is called once per frame
@@ -42,11 +45,14 @@ public class PatientMovemnt : MonoBehaviour
         }
         else if (patientState == 4)
         {
+            agent.isStopped = false;
+
             agent.SetDestination(theGoodPlace.transform.position);
 
             if (agent.hasPath && !agent.pathPending && agent.remainingDistance != Mathf.Infinity && agent.remainingDistance < 1f)
             {
-                Destroy(gameObject);
+                patientState = 5;
+                cureMe.GetComponent<PatientSpawner>().curePatient.Invoke(gameObject);
             }
         }
         else
@@ -65,7 +71,6 @@ public class PatientMovemnt : MonoBehaviour
     {
         theGoodPlace = heaven;
         patientState = 4;
-
     }
 }
 
