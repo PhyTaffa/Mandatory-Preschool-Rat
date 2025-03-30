@@ -10,19 +10,19 @@ public class ReputationBar : MonoBehaviour
     public Slider slider;
     [SerializeField] private int reputationLevel = 1;
     [SerializeField] private int maxReputationLevel = 20;
-    [SerializeField] private float currentReputationXP = 0;
+    [field:SerializeField] public float currentReputationXP { get; set; }
     [SerializeField] private int reputationMaxXP = 100;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject victory;
 
 
-    void SetReputation(int reputation)
+    public void SetReputation(float reputation)
     {
         currentReputationXP = currentReputationXP + reputation;
         slider.value = currentReputationXP;
     }
 
-    void SetMaxReputation(int maxReputation)
+    public void SetMaxReputation(int maxReputation)
     {
         reputationMaxXP = maxReputation;
         slider.maxValue = reputationMaxXP;

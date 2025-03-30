@@ -8,7 +8,7 @@ public class PatienceBar : MonoBehaviour
 
     public Slider slider;
     public float currentPatience = 100;
-    public int maxPatience = 100;
+    public float maxPatience = 100;
     public bool isDead = false;
     private GameObject murderMe;
 
@@ -32,8 +32,9 @@ public class PatienceBar : MonoBehaviour
         slider.value = currentPatience;
     }
 
-    private void SetMaxPatience()
+    public void SetMaxPatience(float num)
     {
+        maxPatience = num;
         slider.maxValue = maxPatience;
     }
 

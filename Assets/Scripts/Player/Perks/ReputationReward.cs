@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class ReputationReward : MonoBehaviour
 {
-    [SerializeField] private int currentRep = 0;
+    [SerializeField] private ReputationBar reputation;
     [SerializeField] private int addRepValue = 10;
 
-    private void Update()
+    public void AddRep(float patience)
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            AddRep();
-        }
-    }
-
-    public void AddRep()
-    {
-        currentRep += addRepValue;
+        reputation.SetReputation(addRepValue * patience);
     }
 }

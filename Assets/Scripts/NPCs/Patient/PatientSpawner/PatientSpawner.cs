@@ -66,6 +66,11 @@ public class PatientSpawner : MonoBehaviour
         }
     }
 
+    public void SetMaxPatienceBar(float num)
+    {
+        patienceBarPrefab.GetComponent<PatienceBar>().SetMaxPatience(num);
+    }
+
     private void AddMemberToLine()
     {
         newPatientTimer += Time.deltaTime;

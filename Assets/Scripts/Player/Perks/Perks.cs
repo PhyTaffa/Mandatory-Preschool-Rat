@@ -29,13 +29,14 @@ public class Perks : MonoBehaviour
     [Header("Medicine Inv Perk")]
     [SerializeField] private int maxInvUpgrade = 3;
     [field: SerializeField] public int currentInvUpgrade { get; private set; }
-    [SerializeField] private int invSlot = 1;
+    [SerializeField] private Medication med;
 
     [Header("Patients Patience Perk")]
     [SerializeField] private int maxPatienceUpgrade = 3;
     [field: SerializeField] public int currentPatienceUpgrade { get; private set; }
     [SerializeField] private int patienceUpgrade = 25;
     [SerializeField] private float patienceLevel = 100;
+    [SerializeField] private GameObject spawner;
 
     [Header("Perk")]
     [SerializeField] private string[] perkName;
@@ -94,14 +95,14 @@ public class Perks : MonoBehaviour
 
     public void UpgradeInv()
     {
-        invSlot++;
+        med.AddMaxMedication(1);
         currentInvUpgrade++;
     }
 
     public void UpgradePatience()
     {
         currentPatienceUpgrade++;
-        patienceLevel = 100 + (patienceUpgrade * Mathf.Sqrt(currentPatienceUpgrade));
+        spawner.GetComponent<PatientSpawner>().SetMaxPatienceBar(100 + (patienceUpgrade * Mathf.Sqrt(currentPatienceUpgrade)));
     }
 
     public string GetPerkName(int perkNum)

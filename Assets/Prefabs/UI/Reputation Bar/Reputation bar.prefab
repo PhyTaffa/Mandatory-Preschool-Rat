@@ -243,7 +243,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.17
+  m_fontSize: 50
   m_fontSizeBase: 37.17
   m_fontWeight: 400
   m_enableAutoSizing: 0
@@ -389,11 +389,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 5708533810823005257}
-  reputationLevel: 1
+  reputationLevel: 0
   maxReputationLevel: 20
   currentReputationXP: 0
   reputationMaxXP: 100
   text: {fileID: 2229997105670942646}
+  victory: {fileID: 7964474742386355291}
 --- !u!1 &8602776335521783631
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,8 +28,6 @@ public class BedInteraction : MonoBehaviour, IInteractable
 
             patientInteraction.playerHasPatient = false;
             patientMovemnt.MoveToBed(gameObject);
-
         }
-
     }
 }

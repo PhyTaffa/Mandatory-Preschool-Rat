@@ -13,13 +13,15 @@ public class PatientMovemnt : MonoBehaviour
     public int patientState = 1;
 
     private GameObject player;
+    private GameObject bed;
     [SerializeField] private NavMeshAgent agent;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         agent.enabled = true;
-        //agent.SetDestination(player.transform.position);
+        agent.SetDestination(player.transform.position);
+
     }
 
     // Update is called once per frame
@@ -36,7 +38,17 @@ public class PatientMovemnt : MonoBehaviour
         }
         else if (patientState == 3)
         {
+            agent.SetDestination(bed.transform.position);
+        }
+        else
+        {
             agent.isStopped = true;
         }
+    }
+
+    public void MoveToBed(GameObject bed)
+    {
+        patientState = 3;
+        this.bed = bed;
     }
 }
