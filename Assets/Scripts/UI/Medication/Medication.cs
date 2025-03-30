@@ -5,7 +5,7 @@ using TMPro;
 
 public class Medication : MonoBehaviour
 {
-    [SerializeField] private int currentMediHeld = 0;
+    public int currentMediHeld = 0;
     [SerializeField] private int maxMediHeld = 1;
     [SerializeField] private TextMeshProUGUI text;
 
