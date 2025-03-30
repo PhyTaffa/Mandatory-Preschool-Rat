@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ManageHelper : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> targetTiles; // List of A & B tiles
+    [SerializeField] public List<GameObject> targetTiles; // List of A & B tiles
     
     private GameObject helper;
     private Dictionary<Vector3, GameObject> tilesDictionary = new Dictionary<Vector3, GameObject>();
@@ -21,15 +21,24 @@ public class ManageHelper : MonoBehaviour
     void Start()
     {
         GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+        GameObject[] tilesBed = GameObject.FindGameObjectsWithTag("Tile Bed");
+        GameObject tileMed = GameObject.FindGameObjectWithTag("Tile Medication");
 
         foreach (GameObject tile in tiles)
         {
             tilesDictionary[tile.transform.position] = tile;
         }
+        foreach (GameObject tile in tilesBed)
+        {
+            tilesDictionary[tile.transform.position] = tile;
+        }
+        tilesDictionary[tileMed.transform.position] = tileMed;
 
 
         helper = this.gameObject;
         squareLength = targetTiles[0].GetComponent<SpriteRenderer>().bounds.size.x; // Assume uniform tile size
+
+
     }
 
     void Update()
@@ -58,6 +67,8 @@ public class ManageHelper : MonoBehaviour
         yield return MoveAlongPath();
 
         //start medicating patience -> acll functoin
+        //IUF ANYBODY SEES THIS AND THIS SHIT IS STUILL EMPTY FILL ITY WIOTH THER PWEFDJASHDOLIGFVASOIKLDFGYHIAOSEJDCOLSI PROPER INSTRUCTION TO HEAL THE PATIENCE BINDFED  TO THE FIRST ELEMENT OF THE TARGET TILE
+        //UWU thx
 
         
         isMoving = false; // Allows another press after full cycle

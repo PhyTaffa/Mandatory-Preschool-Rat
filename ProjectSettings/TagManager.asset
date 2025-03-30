@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Tile
   - Bed
+  - Tile Bed
+  - Tile Medication
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +43,17 @@ public class Perks : MonoBehaviour
     [SerializeField] private string[] perkName;
     [SerializeField] private Sprite[] perkImage;
 
+    [SerializeField] private GameObject[] tileBedArray;
+    private void Start()
+    {
+        //tileBedArray = GameObject.FindGameObjectsWithTag("Tile Bed");
+
+        //foreach (var tileBed in tileBedArray)
+        //{
+        //    Debug.Log(tileBed.name);
+        //}
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -82,13 +94,20 @@ public class Perks : MonoBehaviour
         }
         else
         {
-            Instantiate(bedPrefab, beds[beds.Length-1].transform.position + new Vector3(4, 0, 0), Quaternion.identity, bedParent.transform);   
+            Instantiate(bedPrefab, beds[beds.Length-1].transform.position + new Vector3(4, 0, 0), Quaternion.identity, bedParent.transform);
         }
         currentBedUpgrade++;
     }
     public void UpgradeHelpers()
     {
-        Instantiate(helperPrefab, helperParent.transform.position, Quaternion.identity, helperParent.transform);
+        GameObject tileMed = GameObject.FindGameObjectWithTag("Tile Medication");
+
+        GameObject currHelper = Instantiate(helperPrefab, tileBedArray[currentHelperUpgrade].transform.position, Quaternion.identity, helperParent.transform);
+
+        currHelper.GetComponent<ManageHelper>().targetTiles[0] = tileBedArray[currentHelperUpgrade];
+        currHelper.GetComponent<ManageHelper>().targetTiles[1] = tileMed;
+
+
         currentHelperUpgrade++;
     }
 
