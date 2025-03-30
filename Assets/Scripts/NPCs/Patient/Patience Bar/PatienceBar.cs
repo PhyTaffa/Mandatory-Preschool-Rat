@@ -50,6 +50,11 @@ public class PatienceBar : MonoBehaviour
         return currentPatience;
     }
 
+    public void StopPatientBarTimer()
+    {
+        StopAllCoroutines();
+    }
+
     void LostPatientCondition()
     {
         if(currentPatience <= 0)
