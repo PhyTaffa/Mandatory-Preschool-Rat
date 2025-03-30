@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 77370109}
   m_Layer: 0
   m_Name: GoodPlace
-  m_TagString: Untagged
+  m_TagString: GoodPlace
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -579,7 +579,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.19613743, y: -0.32105052}
+  m_Offset: {x: 0.9472499, y: -0.28299248}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -590,7 +590,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3922749, y: 3.3141396}
+  m_Size: {x: 1.0307379, y: 3.0688756}
   m_EdgeRadius: 0
 --- !u!4 &213771080
 Transform:
@@ -2566,10 +2566,6 @@ PrefabInstance:
       propertyPath: ETGoHome
       value: 
       objectReference: {fileID: 77370108}
-    - target: {fileID: 6055251879648170432, guid: 64adc680b17f56a46bcff586d0ecb4bb, type: 3}
-      propertyPath: m_SortingOrder
-      value: -2
-      objectReference: {fileID: 0}
     - target: {fileID: 8325799764481964408, guid: 64adc680b17f56a46bcff586d0ecb4bb, type: 3}
       propertyPath: m_Name
       value: BedPrefab
@@ -3318,7 +3314,7 @@ PrefabInstance:
     - target: {fileID: 6209727295489935984, guid: 15e8971edca833c4887529984dfa6c6b, type: 3}
       propertyPath: bedPrefab
       value: 
-      objectReference: {fileID: 764229857}
+      objectReference: {fileID: 8325799764481964408, guid: 64adc680b17f56a46bcff586d0ecb4bb, type: 3}
     - target: {fileID: 6209727295489935984, guid: 15e8971edca833c4887529984dfa6c6b, type: 3}
       propertyPath: helperParent
       value: 

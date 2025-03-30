@@ -10,16 +10,24 @@ public class BedInteraction : MonoBehaviour, IInteractable
 
     private float elapsedTime = 0f;
     [HideInInspector] public bool isPatientOnBed = false;
-    [HideInInspector] public bool isHealing = false;
+    [field:SerializeField] public bool isHealing { get; set; }
     [HideInInspector] public bool isNathan = false;
     //private PatientMovemnt patientMovemnt;
+
+    private void Start()
+    {
+        ETGoHome = GameObject.FindGameObjectWithTag("GoodPlace");
+    }
 
     private void Update()
     {
         if (isHealing)
         {
-            Movement movement = FindObjectOfType<Movement>();
-            movement.isCuring = true;
+            if (!isNathan)
+            {
+                Movement movement = FindObjectOfType<Movement>();
+                movement.isCuring = true;
+            }
             elapsedTime += Time.deltaTime;
             int seconds = Mathf.FloorToInt(elapsedTime % 60);
 
@@ -33,7 +41,6 @@ public class BedInteraction : MonoBehaviour, IInteractable
                 Debug.Log("Cured");
                 isHealing = false;
                 sliderGO.SetActive(false);
-                sliderGO.SetActive(false);
 
                 isPatientOnBed = false;
 
@@ -42,45 +49,77 @@ public class BedInteraction : MonoBehaviour, IInteractable
                 currentPatient.SendPatientToHome(ETGoHome);
 
                 currentPatient = null;
-                movement.isCuring = false;
+                if (!isNathan)
+                {
+                    Movement movement = FindObjectOfType<Movement>();
+                    movement.isCuring = false;
+                }
+
+                isNathan = false;
             }
         }
     }
 
-    public void Interact()
+    public void Interact(GameObject obj)
     {
-        //Put funciton call here to put the patient in bed
+        if (isHealing)
+        {
+            return;
+        }
+
         if (currentPatient == null)
         {
             isPatientOnBed = false;
         }
 
-        if (!isPatientOnBed)
+        if (obj.CompareTag("Player"))
         {
-            foreach (PatientMovemnt patient in FindObjectsOfType<PatientMovemnt>())
+            if (!isPatientOnBed)
             {
-                if (patient.patientState == 2)
+                foreach (PatientMovemnt patient in FindObjectsOfType<PatientMovemnt>())
                 {
-                    patient.MoveToBed(gameObject);
-                    currentPatient = patient;
-                    isPatientOnBed = true;
-                    FindObjectOfType<PatientInteraction>().playerHasPatient = false;
+                    if (patient.patientState == 2)
+                    {
+                        patient.MoveToBed(gameObject);
+                        currentPatient = patient;
+                        isPatientOnBed = true;
+                        FindObjectOfType<PatientInteraction>().playerHasPatient = false;
+                    }
+                }
+            }
+            else
+            {
+                Medication meds = FindObjectOfType<Medication>();
+
+                if (isPatientOnBed)
+                {
+                    if (meds.currentMediHeld > 0)
+                    {
+                        FindObjectOfType<PatientSpawner>().GetBarWithPatient(currentPatient.gameObject).GetComponent<PatienceBar>().healing = true;
+                        elapsedTime = 0;
+                        Debug.Log("Curing Patient");
+                        meds.SubtractCurrentMedication(1);
+                        isHealing = true;
+                        return;
+                    }
                 }
             }
         }
         else
         {
-            Medication meds = FindObjectOfType<Medication>();
-
-            if ((isPatientOnBed && meds.currentMediHeld > 0) || isNathan)
+            if (isPatientOnBed)
             {
                 elapsedTime = 0;
                 Debug.Log("Curing Patient");
-                FindObjectOfType<PatientSpawner>().GetBarWithPatient(currentPatient.gameObject).GetComponent<PatienceBar>().healing = true;
-                meds.SubtractCurrentMedication(1);
                 isHealing = true;
+                isNathan = true;
+                FindObjectOfType<PatientSpawner>().GetBarWithPatient(currentPatient.gameObject).GetComponent<PatienceBar>().healing = true;
+                return;
             }
         }
+
+        //Put funciton call here to put the patient in bed
+        
 
         //Debug.Log("Interacted with the a Bed");
 

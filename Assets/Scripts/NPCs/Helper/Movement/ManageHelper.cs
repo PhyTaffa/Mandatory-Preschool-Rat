@@ -50,6 +50,11 @@ public class ManageHelper : MonoBehaviour
         {
             StartCoroutine(CycleAB());
         }
+        //else if (bedInteraction.isPatientOnBed && isMoving && bedInteraction.isHealing)
+        //{
+        //    StopAllCoroutines();
+        //    StartCoroutine(CycleBA());
+        //}
     }
 
     IEnumerator CycleAB()
@@ -71,11 +76,24 @@ public class ManageHelper : MonoBehaviour
         //start medicating patience -> acll functoin
         //IUF ANYBODY SEES THIS AND THIS SHIT IS STUILL EMPTY FILL ITY WIOTH THER PWEFDJASHDOLIGFVASOIKLDFGYHIAOSEJDCOLSI PROPER INSTRUCTION TO HEAL THE PATIENCE BINDFED  TO THE FIRST ELEMENT OF THE TARGET TILE
         Debug.Log("Patient Healing by Worker");
-        bedInteraction.isNathan = true;
-        bedInteraction.Interact();
-
+        bedInteraction.Interact(gameObject);
         
         isMoving = false; // Allows another press after full cycle
+    }
+
+    IEnumerator CycleBA()
+    {
+        if (targetTiles.Count < 2) yield break;
+
+        isMoving = false;
+        GameObject newObj = new GameObject();
+        newObj.transform.position = transform.position;
+
+        // Move B → A
+        aStar(newObj, bedBinder.gameObject);
+        yield return MoveAlongPath();
+
+        Destroy(newObj);
     }
 
     IEnumerator MoveAlongPath()
@@ -105,7 +123,7 @@ public class ManageHelper : MonoBehaviour
         while (priorityQueue.Count > 0)
         {
             GameObject current = priorityQueue.Dequeue();
-            current.GetComponent<SpriteRenderer>().color = Color.black;
+            //current.GetComponent<SpriteRenderer>().color = Color.black;
 
             if (current == finishTile)
             {

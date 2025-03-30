@@ -15,7 +15,6 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-       
     }
 
     // Update is called once per frame
@@ -47,7 +46,7 @@ public class PlayerInteract : MonoBehaviour
                 IInteractable interactableObject = HitInformation.collider.GetComponent<IInteractable>();
                 if (interactableObject != null)
                 {
-                    interactableObject.Interact();
+                    interactableObject.Interact(player);
                 }
             }
         }

@@ -98,7 +98,6 @@ public class Perks : MonoBehaviour
             currHBed = Instantiate(bedPrefab, beds[beds.Length-1].transform.position + new Vector3(4, 0, 0), Quaternion.identity, bedParent.transform);
         }
 
-
         currentBedUpgrade++;
         tileBedArray[currentBedUpgrade].GetComponent<BedBinder>().bedRefGO = currHBed;
     }

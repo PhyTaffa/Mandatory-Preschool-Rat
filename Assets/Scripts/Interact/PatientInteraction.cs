@@ -3,7 +3,7 @@ using UnityEngine;
 public class PatientInteraction : MonoBehaviour, IInteractable
 {
     public bool playerHasPatient = false;
-    public void Interact()
+    public void Interact(GameObject obj)
     {
         Debug.Log($"Interacted with the patient Line");
 

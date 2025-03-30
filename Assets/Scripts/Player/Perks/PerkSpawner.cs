@@ -42,7 +42,7 @@ public class PerkSpawner : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            repBar.reputationLevel++;
+            repBar.SetReputation(50);
         }
     }
 
