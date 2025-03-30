@@ -58,6 +58,7 @@ public class ManageHelper : MonoBehaviour
         yield return MoveAlongPath();
 
         //start medicating patience -> acll functoin
+
         
         isMoving = false; // Allows another press after full cycle
     }
