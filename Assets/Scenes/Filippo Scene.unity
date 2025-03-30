@@ -253,6 +253,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTiles: []
   helper: {fileID: 0}
+  medicationLocation: []
+  bedGO: {fileID: 0}
 --- !u!50 &400555787
 Rigidbody2D:
   serializedVersion: 4
@@ -392,6 +394,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &575126707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4273738920713139792, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+  m_PrefabInstance: {fileID: 557079825128348750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &575126710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575126707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9091cf9d3cec3e046aa0b6eb7a692c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &638976614 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6868380424106534566, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
@@ -428,6 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTiles: []
   helper: {fileID: 0}
+  medicationLocation: []
+  bedGO: {fileID: 0}
 --- !u!4 &754018976
 Transform:
   m_ObjectHideFlags: 0
@@ -456,6 +478,7 @@ GameObject:
   - component: {fileID: 1017550922}
   - component: {fileID: 1017550921}
   - component: {fileID: 1017550925}
+  - component: {fileID: 1017550926}
   m_Layer: 0
   m_Name: Helper
   m_TagString: Untagged
@@ -618,7 +641,42 @@ MonoBehaviour:
   - {fileID: 190984749}
   - {fileID: 638976614}
   - {fileID: 1130659145}
-  helper: {fileID: 0}
+  helper: {fileID: 1017550920}
+  medicationLocation:
+  - {fileID: 575126707}
+  bedGO: {fileID: 0}
+--- !u!114 &1017550926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017550920}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c705e7c4d9369c40a569a74defd0dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  medicationLocation:
+  - {fileID: 0}
+--- !u!1 &1033906632 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2199742536176502234, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+  m_PrefabInstance: {fileID: 557079825128348750}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1033906635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033906632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6633e585a10181a488f813f69642cba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasPatient: 0
 --- !u!1 &1130659145 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4816857832797962390, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
@@ -632,6 +690,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2199742536176502234, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Name
+      value: bed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258007791340215875, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258007791340215875, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.g
+      value: 0.06925964
+      objectReference: {fileID: 0}
+    - target: {fileID: 3258007791340215875, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4273738920713139792, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Name
+      value: Medicine location A
+      objectReference: {fileID: 0}
     - target: {fileID: 4437181241691152004, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -672,6 +750,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6450711156640769381, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450711156640769381, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9074341
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450711156640769381, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672824443335131174, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90181255
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672824443335131174, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672824443335131174, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8772216493230818204, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
       propertyPath: m_Name
       value: TilesMap
@@ -679,7 +781,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2199742536176502234, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1033906635}
+    - targetCorrespondingSourceObject: {fileID: 4273738920713139792, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 575126710}
   m_SourcePrefab: {fileID: 100100000, guid: 8e23be43ae98ed14caff033fe4acd281, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
